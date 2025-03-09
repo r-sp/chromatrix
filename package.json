@@ -1,0 +1,27 @@
+{
+  "name": "chromatrix",
+  "description": "The Holy Colors",
+  "version": "0.0.1",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=22.x"
+  },
+  "packageManager": "pnpm@10.6.1",
+  "browserslist": "defaults, not ie <= 11",
+  "scripts": {
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "lint": "turbo run lint",
+    "clean": "turbo run clean",
+    "reset": "turbo run reset",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "chromatrix": "turbo dev --filter=@repo/color --filter=@repo/coverage"
+  },
+  "devDependencies": {
+    "prettier": "^3.5.3",
+    "prettier-plugin-tailwindcss": "^0.6.11",
+    "turbo": "^2.4.4",
+    "typescript": "^5.8.2"
+  }
+}
