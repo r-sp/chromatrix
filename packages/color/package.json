@@ -1,0 +1,31 @@
+{
+  "name": "@repo/color",
+  "version": "0.0.1",
+  "type": "module",
+  "private": true,
+  "main": "dist/index.js",
+  "exports": {
+    "./utils": "./src/utils.ts",
+    "./types": "./src/types.ts",
+    "./hsl": "./src/space/hsl.ts",
+    "./hsv": "./src/space/hsv.ts",
+    "./hwb": "./src/space/hwb.ts",
+    "./lab": "./src/space/lab.ts",
+    "./lrgb": "./src/space/lrgb.ts",
+    "./rgb": "./src/space/rgb.ts",
+    "./xyz50": "./src/space/xyz50.ts",
+    "./random": "./src/random.ts"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "clean": "rm -rf dist",
+    "reset": "rm -rf node_modules"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "@types/node": "^22.13.9",
+    "tsup": "^8.4.0",
+    "typescript": "^5.8.2"
+  }
+}
