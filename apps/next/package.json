@@ -1,0 +1,36 @@
+{
+  "name": "next",
+  "version": "0.0.1",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=22.x"
+  },
+  "packageManager": "pnpm@10.6.1",
+  "browserslist": "defaults, not ie <= 11",
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev --turbopack --port 3000",
+    "start": "next start",
+    "lint": "next lint",
+    "clean": "rm -rf .next",
+    "reset": "rm -rf node_modules"
+  },
+  "dependencies": {
+    "@tailwindcss/postcss": "^4.0.12",
+    "next": "15.2.1",
+    "postcss": "^8.5.3",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "tailwindcss": "^4.0.12"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@types/node": "^22.13.9",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "eslint": "^9.21.0",
+    "typescript": "^5.8.2"
+  }
+}
