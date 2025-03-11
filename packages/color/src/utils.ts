@@ -1,6 +1,6 @@
-import type { ColorKind, ColorSpace, CssColor, ExcludeKind } from "./types";
+import type { ColorKind, ColorSpace, CssColor } from "./types";
 
-const extract = <T extends ColorKind, V extends ExcludeKind<T>>(
+const extract = <T extends ColorKind, V extends Exclude<ColorKind, T>>(
   input: ColorSpace<T>,
   fn: (c: number, t: number, x: number) => ColorSpace<V>,
 ) => {
@@ -14,20 +14,12 @@ const isolate = <T extends ColorKind>(
   return fn(input[0], input[1], input[2]);
 };
 
-const { round, pow, min, max, abs, sign, cbrt } = Math;
-const power = pow;
-const minimal = min;
-const maximal = max;
-const absolute = abs;
-const signature = sign;
-const cuberoot = cbrt;
-
 const normalize = (value: number, float: number = 0): number => {
   if (float === 0) {
-    return round(value);
+    return Math.round(value);
   }
-  const digit = pow(10, float);
-  return round(value * digit) / digit;
+  const digit = Math.pow(10, float);
+  return Math.round(value * digit) / digit;
 };
 
 const nearest = <T extends ColorKind>(
@@ -58,16 +50,4 @@ const clamp = (value: number, min: number = 0, max: number = 1): number => {
   return value > max ? max : value < min ? min : value;
 };
 
-export {
-  extract,
-  isolate,
-  nearest,
-  multiply,
-  minimal,
-  maximal,
-  absolute,
-  signature,
-  cuberoot,
-  power,
-  clamp,
-};
+export { extract, isolate, nearest, multiply, clamp };

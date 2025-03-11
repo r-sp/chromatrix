@@ -1,12 +1,11 @@
 import type { ColorSpace } from "../types";
-import { absolute, signature, power } from "../utils";
 
 const linearize = (c: number): number => {
-  const abs = absolute(c);
+  const abs = Math.abs(c);
   if (abs <= 0.04045) {
     return c / 12.92;
   }
-  return (signature(c) || 1) * power((abs + 0.055) / 1.055, 2.4);
+  return (Math.sign(c) || 1) * Math.pow((abs + 0.055) / 1.055, 2.4);
 };
 
 const rgbToLrgb = (r: number, g: number, b: number): ColorSpace<"lrgb"> => {
@@ -17,9 +16,9 @@ const rgbToLrgb = (r: number, g: number, b: number): ColorSpace<"lrgb"> => {
 };
 
 const delinearize = (c: number): number => {
-  const abs = absolute(c);
+  const abs = Math.abs(c);
   if (abs > 0.0031308) {
-    return (signature(c) || 1) * (1.055 * power(abs, 1 / 2.4) - 0.055);
+    return (Math.sign(c) || 1) * (1.055 * Math.pow(abs, 1 / 2.4) - 0.055);
   }
   return c * 12.92;
 };

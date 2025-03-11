@@ -1,9 +1,8 @@
 import type { ColorSpace } from "../types";
-import { minimal, maximal, absolute } from "../utils";
 
 const rgbToHsv = (r: number, g: number, b: number): ColorSpace<"hsv"> => {
-  const max = maximal(r, g, b);
-  const min = minimal(r, g, b);
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
   const delta = max - min;
   let h: number, s: number, v: number;
   if (delta === 0) {
@@ -34,7 +33,7 @@ const hsvToRgb = (h: number, s: number, v: number): ColorSpace<"rgb"> => {
     r = g = b = v;
   } else {
     const u = v * s;
-    const i = u * (1 - absolute(((h / 60) % 2) - 1));
+    const i = u * (1 - Math.abs(((h / 60) % 2) - 1));
     const o = v - u;
     let c: number, t: number, x: number;
     if (h < 60) {

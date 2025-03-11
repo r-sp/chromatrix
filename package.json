@@ -14,9 +14,8 @@
     "dev": "turbo dev",
     "lint": "turbo run lint",
     "clean": "turbo run clean",
-    "reset": "turbo run reset",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "chromatrix": "turbo dev --filter=@repo/color --filter=@repo/coverage"
+    "reset": "turbo run reset && rm -rf node_modules",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
     "prettier": "^3.5.3",
