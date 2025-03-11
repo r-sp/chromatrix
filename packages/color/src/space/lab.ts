@@ -1,9 +1,8 @@
 import type { ColorSpace, CssColor } from "../types";
-import { cuberoot, power } from "../utils";
 
 const linearize = (c: number): number => {
   return c > 0.008856451679035631
-    ? cuberoot(c)
+    ? Math.cbrt(c)
     : (903.2962962962963 * c + 16) / 116;
 };
 
@@ -18,8 +17,8 @@ const xyz50ToLab = (x: number, y: number, z: number): ColorSpace<"lab"> => {
 };
 
 const delinearize = (c: number): number => {
-  return power(c, 3) > 0.008856451679035631
-    ? power(c, 3)
+  return Math.pow(c, 3) > 0.008856451679035631
+    ? Math.pow(c, 3)
     : (116 * c - 16) / 903.2962962962963;
 };
 
