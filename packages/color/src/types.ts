@@ -20,19 +20,4 @@ type CssColor<T extends ColorKind> = string & {
   readonly mode: T;
 };
 
-type ExcludeKind<T extends ColorKind> = Exclude<ColorKind, T>;
-
-type Converter<T extends ColorMode> = [
-  ColorSpace<T>,
-  CssColor<T>,
-  ColorSpace<"rgb">,
-];
-
-export type {
-  ColorKind,
-  ColorSpace,
-  ColorMode,
-  CssColor,
-  ExcludeKind,
-  Converter,
-};
+export type { ColorKind, ColorSpace, ColorMode, CssColor };
