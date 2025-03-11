@@ -2,20 +2,23 @@ import type { ColorSpace, Converter } from "../types";
 import { extract, isolate, nearest } from "@repo/color/utils";
 import { rgbToLrgb, lrgbToRgb } from "@repo/color/fn";
 import { lrgbToXyz50, xyz50ToLrgb } from "@repo/color/fn";
-import { xyz50ToLab, labToXyz50, labToCss } from "@repo/color/fn";
+import { xyz50ToLab, labToXyz50 } from "@repo/color/fn";
+import { labToLch, lchToLab, lchToCss } from "@repo/color/fn";
 
-const convertLab = (input: ColorSpace<"rgb">) => {
+const convertLch = (input: ColorSpace<"rgb">) => {
   const lrgb = extract(input, rgbToLrgb);
   const xyz50 = extract(lrgb, lrgbToXyz50);
   const lab = extract(xyz50, xyz50ToLab);
-  const color = nearest(lab, 3);
-  const css = isolate(color, labToCss);
+  const lch = extract(lab, labToLch);
+  const color = nearest(lch, 3);
+  const css = isolate(color, lchToCss);
 
-  const lab_xyz50 = extract(lab, labToXyz50);
+  const lch_lab = extract(lch, lchToLab);
+  const lab_xyz50 = extract(lch_lab, labToXyz50);
   const xyz50_lrgb = extract(lab_xyz50, xyz50ToLrgb);
   const lrgb_rgb = extract(xyz50_lrgb, lrgbToRgb);
 
-  return [lab, css, lrgb_rgb] as Converter<"lab">;
+  return [lch, css, lrgb_rgb] as Converter<"lch">;
 };
 
-export default convertLab;
+export default convertLch;
