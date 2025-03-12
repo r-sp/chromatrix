@@ -1,47 +1,27 @@
-import { randomColor } from "@repo/color/fn";
-import convertHex from "./color/hex";
-import convertRgb from "./color/rgb";
-import convertHsl from "./color/hsl";
-import convertHwb from "./color/hwb";
-import convertLab from "./color/lab";
-import convertLch from "./color/lch";
-import convertOklab from "./color/oklab";
-import convertOklch from "./color/oklch";
+import { randomColor, convertColor, convertCss } from "@repo/color/fn";
 
-const converter = () => {
-  const color = randomColor("rgb");
-
-  const hex = convertHex(color);
-  const rgb = convertRgb(color);
-  const hsl = convertHsl(color);
-  const hwb = convertHwb(color);
-  const lab = convertLab(color);
-  const lch = convertLch(color);
-  const oklab = convertOklab(color);
-  const oklch = convertOklch(color);
-
-  const log = (index: number) => {
-    return {
-      hex: hex[index],
-      rgb: rgb[index],
-      hsl: hsl[index],
-      hwb: hwb[index],
-      lab: lab[index],
-      lch: lch[index],
-      oklab: oklab[index],
-      oklch: oklch[index],
-    };
-  };
-
-  return {
-    color: log(0),
-    css: log(1),
-    base: log(2),
-  };
-};
+const initial = randomColor("rgb");
 
 console.time("benchmark");
 
-const test = converter();
+const color = {
+  rgb: initial,
+  hsl: convertColor(initial, "rgb", "hsl"),
+  hwb: convertColor(initial, "rgb", "hwb"),
+  lab: convertColor(initial, "rgb", "lab"),
+  lch: convertColor(initial, "rgb", "lch"),
+  oklab: convertColor(initial, "rgb", "oklab"),
+  oklch: convertColor(initial, "rgb", "oklch"),
+};
 
-console.timeLog("benchmark", test.css);
+const css = {
+  rgb: convertCss(color.rgb, "rgb"),
+  hsl: convertCss(color.hsl, "hsl"),
+  hwb: convertCss(color.hwb, "hwb"),
+  lab: convertCss(color.lab, "lab"),
+  lch: convertCss(color.lch, "lch"),
+  oklab: convertCss(color.oklch, "oklab"),
+  oklch: convertCss(color.oklab, "oklch"),
+};
+
+console.timeLog("benchmark", [color, css]);

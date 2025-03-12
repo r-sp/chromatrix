@@ -18,4 +18,6 @@ export { lrgbToOklab, oklabToLrgb, oklabToCss } from "./space/oklab";
 
 export { oklabToOklch, oklchToOklab, oklchToCss } from "./space/oklch";
 
+export { convertColor, convertCss } from "./converter";
+
 export { randomColor } from "./random";
