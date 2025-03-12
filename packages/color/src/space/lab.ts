@@ -17,9 +17,8 @@ const xyz50ToLab = (x: number, y: number, z: number): ColorSpace<"lab"> => {
 };
 
 const delinearize = (c: number): number => {
-  return Math.pow(c, 3) > 0.008856451679035631
-    ? Math.pow(c, 3)
-    : (116 * c - 16) / 903.2962962962963;
+  const p = Math.pow(c, 3);
+  return p > 0.008856451679035631 ? p : (116 * c - 16) / 903.2962962962963;
 };
 
 const labToXyz50 = (l: number, a: number, b: number): ColorSpace<"xyz50"> => {
