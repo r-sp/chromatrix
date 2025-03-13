@@ -1,6 +1,7 @@
 import type { ColorSpace } from "../types";
 
-const lrgbToXyz50 = (r: number, g: number, b: number): ColorSpace<"xyz50"> => {
+const lrgbToXyz50 = (input: ColorSpace<"lrgb">): ColorSpace<"xyz50"> => {
+  const [r, g, b] = input;
   const x =
     0.436065742824811 * r + 0.3851514688337912 * g + 0.14307845442264197 * b;
   const y =
@@ -10,7 +11,8 @@ const lrgbToXyz50 = (r: number, g: number, b: number): ColorSpace<"xyz50"> => {
   return [x, y, z] as ColorSpace<"xyz50">;
 };
 
-const xyz50ToLrgb = (x: number, y: number, z: number): ColorSpace<"lrgb"> => {
+const xyz50ToLrgb = (input: ColorSpace<"xyz50">): ColorSpace<"lrgb"> => {
+  const [x, y, z] = input;
   const r =
     x * 3.1341359569958707 - y * 1.6173863321612538 - 0.4906619460083532 * z;
   const g =

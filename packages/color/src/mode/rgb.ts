@@ -1,17 +1,13 @@
-import type { ColorSpace, CssColor } from "../types";
+import type { ColorSpace } from "../types";
 
-const rgbToHex = (
-  r: number,
-  g: number,
-  b: number,
-  denote: boolean = true,
-): CssColor<"rgb"> => {
+const rgbToHex = (input: ColorSpace<"rgb">, denote: boolean = true) => {
+  let [r, g, b] = input;
   let hex: string, s: number;
   s = 1 << 24;
   r = r << 16;
   g = g << 8;
   hex = (s | r | g | b).toString(16).slice(1);
-  return denote ? (hex as CssColor<"rgb">) : (`#${hex}` as CssColor<"rgb">);
+  return denote ? hex : `#${hex}`;
 };
 
 const hexToRgb = (input: string): ColorSpace<"rgb"> => {
@@ -25,8 +21,4 @@ const hexToRgb = (input: string): ColorSpace<"rgb"> => {
   return [r, g, b] as ColorSpace<"rgb">;
 };
 
-const rgbToCss = (r: number, g: number, b: number): CssColor<"rgb"> => {
-  return `rgb(${r} ${g} ${b})` as CssColor<"rgb">;
-};
-
-export { rgbToHex, hexToRgb, rgbToCss };
+export { rgbToHex, hexToRgb };

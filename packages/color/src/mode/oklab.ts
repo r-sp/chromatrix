@@ -1,6 +1,7 @@
-import type { ColorSpace, CssColor } from "../types";
+import type { ColorSpace } from "../types";
 
-const lrgbToOklab = (r: number, g: number, b: number): ColorSpace<"oklab"> => {
+const lrgbToOklab = (input: ColorSpace<"lrgb">): ColorSpace<"oklab"> => {
+  const [r, g, b] = input;
   const L = Math.cbrt(
     0.41222147079999993 * r + 0.5363325363 * g + 0.0514459929 * b,
   );
@@ -16,7 +17,8 @@ const lrgbToOklab = (r: number, g: number, b: number): ColorSpace<"oklab"> => {
   return [c, t, x] as ColorSpace<"oklab">;
 };
 
-const oklabToLrgb = (l: number, a: number, b: number): ColorSpace<"lrgb"> => {
+const oklabToLrgb = (input: ColorSpace<"oklab">): ColorSpace<"lrgb"> => {
+  const [l, a, b] = input;
   const L = Math.pow(
     l * 0.99999999845051981432 +
       0.39633779217376785678 * a +
@@ -44,8 +46,4 @@ const oklabToLrgb = (l: number, a: number, b: number): ColorSpace<"lrgb"> => {
   return [c, t, x] as ColorSpace<"lrgb">;
 };
 
-const oklabToCss = (l: number, a: number, b: number): CssColor<"oklab"> => {
-  return `oklab(${l} ${a} ${b})` as CssColor<"oklab">;
-};
-
-export { lrgbToOklab, oklabToLrgb, oklabToCss };
+export { lrgbToOklab, oklabToLrgb };

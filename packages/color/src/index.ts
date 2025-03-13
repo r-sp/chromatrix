@@ -1,23 +1,45 @@
-export { rgbToHex, hexToRgb, rgbToCss } from "./space/rgb";
+export { rgbToHex, hexToRgb } from "./mode/rgb";
 
-export { rgbToHsv, hsvToRgb } from "./space/hsv";
+export { rgbToHsv, hsvToRgb } from "./mode/hsv";
 
-export { hsvToHsl, hslToHsv, hslToCss } from "./space/hsl";
+export { hsvToHsl, hslToHsv } from "./mode/hsl";
 
-export { hsvToHwb, hwbToHsv, hwbToCss } from "./space/hwb";
+export { hsvToHwb, hwbToHsv } from "./mode/hwb";
 
-export { rgbToLrgb, lrgbToRgb } from "./space/lrgb";
+export { rgbToLrgb, lrgbToRgb } from "./mode/lrgb";
 
-export { lrgbToXyz50, xyz50ToLrgb } from "./space/xyz50";
+export { lrgbToXyz50, xyz50ToLrgb } from "./mode/xyz50";
 
-export { xyz50ToLab, labToXyz50, labToCss } from "./space/lab";
+export { xyz50ToLab, labToXyz50 } from "./mode/lab";
 
-export { labToLch, lchToLab, lchToCss } from "./space/lch";
+export { labToLch, lchToLab } from "./mode/lch";
 
-export { lrgbToOklab, oklabToLrgb, oklabToCss } from "./space/oklab";
+export { lrgbToOklab, oklabToLrgb } from "./mode/oklab";
 
-export { oklabToOklch, oklchToOklab, oklchToCss } from "./space/oklch";
+export { oklabToOklch, oklchToOklab } from "./mode/oklch";
 
-export { convertColor, convertCss } from "./converter";
+export {
+  convertRgb,
+  convertHsl,
+  convertHwb,
+  convertLab,
+  convertLch,
+  convertOklab,
+  convertOklch,
+  convertColor,
+  switchColor,
+} from "./lib/convert";
 
-export { randomColor } from "./random";
+export {
+  formatRgb,
+  formatHsl,
+  formatHwb,
+  formatLab,
+  formatLch,
+  formatOklab,
+  formatOklch,
+  formatCss,
+  switchCss,
+} from "./lib/format";
+
+export { randomColor } from "./lib/random";

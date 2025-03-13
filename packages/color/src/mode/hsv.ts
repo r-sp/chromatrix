@@ -1,6 +1,7 @@
 import type { ColorSpace } from "../types";
 
-const rgbToHsv = (r: number, g: number, b: number): ColorSpace<"hsv"> => {
+const rgbToHsv = (input: ColorSpace<"rgb">): ColorSpace<"hsv"> => {
+  const [r, g, b] = input;
   const max = Math.max(r, g, b);
   const min = Math.min(r, g, b);
   const delta = max - min;
@@ -27,7 +28,8 @@ const rgbToHsv = (r: number, g: number, b: number): ColorSpace<"hsv"> => {
   return [h, s, v] as ColorSpace<"hsv">;
 };
 
-const hsvToRgb = (h: number, s: number, v: number): ColorSpace<"rgb"> => {
+const hsvToRgb = (input: ColorSpace<"hsv">): ColorSpace<"rgb"> => {
+  const [h, s, v] = input;
   let r: number, g: number, b: number;
   if (s === 0) {
     r = g = b = v;
