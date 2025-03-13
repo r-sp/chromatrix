@@ -6,7 +6,6 @@ export default defineConfig({
   entry: {
     index: "./src/index.ts",
     utils: "./src/utils.ts",
-    random: "./src/random.ts",
   },
   dts: true,
   clean: true,
