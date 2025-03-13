@@ -1,4 +1,4 @@
-import type { ColorSpace, CssColor } from "../types";
+import type { ColorSpace } from "../types";
 
 const linearize = (c: number): number => {
   return c > 0.008856451679035631
@@ -6,7 +6,13 @@ const linearize = (c: number): number => {
     : (903.2962962962963 * c + 16) / 116;
 };
 
-const xyz50ToLab = (x: number, y: number, z: number): ColorSpace<"lab"> => {
+const delinearize = (c: number): number => {
+  const p = Math.pow(c, 3);
+  return p > 0.008856451679035631 ? p : (116 * c - 16) / 903.2962962962963;
+};
+
+const xyz50ToLab = (input: ColorSpace<"xyz50">): ColorSpace<"lab"> => {
+  let [x, y, z] = input;
   x = linearize(x / 0.9642956764295677);
   y = linearize(y / 1);
   z = linearize(z / 0.8251046025104602);
@@ -16,12 +22,8 @@ const xyz50ToLab = (x: number, y: number, z: number): ColorSpace<"lab"> => {
   return [l, a, b] as ColorSpace<"lab">;
 };
 
-const delinearize = (c: number): number => {
-  const p = Math.pow(c, 3);
-  return p > 0.008856451679035631 ? p : (116 * c - 16) / 903.2962962962963;
-};
-
-const labToXyz50 = (l: number, a: number, b: number): ColorSpace<"xyz50"> => {
+const labToXyz50 = (input: ColorSpace<"lab">): ColorSpace<"xyz50"> => {
+  let [l, a, b] = input;
   l = (l + 16) / 116;
   a = a / 500 + l;
   b = l - b / 200;
@@ -31,8 +33,4 @@ const labToXyz50 = (l: number, a: number, b: number): ColorSpace<"xyz50"> => {
   return [x, y, z] as ColorSpace<"xyz50">;
 };
 
-const labToCss = (l: number, a: number, b: number): CssColor<"lab"> => {
-  return `lab(${l} ${a} ${b})` as CssColor<"lab">;
-};
-
-export { xyz50ToLab, labToXyz50, labToCss };
+export { xyz50ToLab, labToXyz50 };
