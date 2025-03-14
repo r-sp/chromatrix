@@ -27,7 +27,7 @@ export {
   convertOklab,
   convertOklch,
   convertColor,
-  switchColor,
+  convertHue,
 } from "./lib/convert";
 
 export {
@@ -39,7 +39,10 @@ export {
   formatOklab,
   formatOklch,
   formatCss,
-  switchCss,
 } from "./lib/format";
 
-export { randomColor } from "./lib/random";
+export { createHarmony } from "./lib/harmony";
+
+export { createShades, createScales } from "./lib/interpolate";
+
+export { createPRNG, createToken, randomColor } from "./lib/random";
