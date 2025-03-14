@@ -1,6 +1,13 @@
-import { randomColor, convertColor, formatCss } from "@repo/color/fn";
+import {
+  createPRNG,
+  randomColor,
+  convertColor,
+  formatCss,
+} from "@repo/color/fn";
 
-const initial = randomColor("rgb");
+const token = createPRNG(Date.now());
+
+const initial = randomColor("rgb", token);
 
 console.time("benchmark");
 

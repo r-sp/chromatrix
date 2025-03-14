@@ -168,105 +168,29 @@ const convertColor = <T extends ColorMode, I extends Exclude<ColorMode, T>>(
   input: ColorFormat<T>,
   output: I,
 ): ColorFormat<I> => {
-  const target = input[0];
-  const compose = convertMode[target]<I>;
+  const compose = convertMode[input[0]]<I>;
   return compose(input.slice(1) as ColorSpace<T>, output);
 };
 
-const switchMode = <T extends ColorMode>(
-  input: BaseColor,
-  output: T,
-): ColorFormat<T> => {
-  switch (output) {
-    case "rgb": {
-      return composeRgb(input) as ColorFormat<T>;
-    }
-    case "hsl": {
-      return composeHsl(input) as ColorFormat<T>;
-    }
-    case "hwb": {
-      return composeHwb(input) as ColorFormat<T>;
-    }
-    case "lab": {
-      return composeLab(input) as ColorFormat<T>;
-    }
-    case "lch": {
-      return composeLch(input) as ColorFormat<T>;
-    }
-    case "oklab": {
-      return composeOklab(input) as ColorFormat<T>;
-    }
-    case "oklch": {
-      return composeOklch(input) as ColorFormat<T>;
-    }
-  }
+const hueMode: {
+  [T in ColorMode]: (
+    input: ColorFormat<T>,
+  ) => ColorFormat<"hsl" | "hwb" | "lch" | "oklch">;
+} = {
+  rgb: (input) => convertColor(input, "hsl"),
+  hsl: (color) => color,
+  hwb: (color) => color,
+  lab: (input) => convertColor(input, "lch"),
+  lch: (color) => color,
+  oklab: (input) => convertColor(input, "oklch"),
+  oklch: (color) => color,
 };
 
-const switchColor = <T extends ColorMode, I extends Exclude<ColorMode, T>>(
+const convertHue = <T extends ColorMode>(
   input: ColorFormat<T>,
-  output: I,
-) => {
-  const color = input.slice(1) as ColorSpace<T>;
-  const mode = input[0];
-  switch (mode) {
-    case "rgb": {
-      const rgb = color as ColorSpace<"rgb">;
-      const hsv = rgbToHsv(rgb);
-      const lrgb = rgbToLrgb(rgb);
-      const xyz50 = lrgbToXyz50(lrgb);
-      return switchMode([rgb, hsv, lrgb, xyz50], output);
-    }
-    case "hsl": {
-      const hsl = color as ColorSpace<"hsl">;
-      const hsv = hslToHsv(hsl);
-      const rgb = hsvToRgb(hsv);
-      const lrgb = rgbToLrgb(rgb);
-      const xyz50 = lrgbToXyz50(lrgb);
-      return switchMode([rgb, hsv, lrgb, xyz50], output);
-    }
-    case "hwb": {
-      const hwb = color as ColorSpace<"hwb">;
-      const hsv = hwbToHsv(hwb);
-      const rgb = hsvToRgb(hsv);
-      const lrgb = rgbToLrgb(rgb);
-      const xyz50 = lrgbToXyz50(lrgb);
-      return switchMode([rgb, hsv, lrgb, xyz50], output);
-    }
-    case "lab": {
-      const lab = color as ColorSpace<"lab">;
-      const xyz50 = labToXyz50(lab);
-      const lrgb = xyz50ToLrgb(xyz50);
-      const rgb = lrgbToRgb(lrgb);
-      const hsv = rgbToHsv(rgb);
-      return switchMode([rgb, hsv, lrgb, xyz50], output);
-    }
-    case "lch": {
-      const lch = color as ColorSpace<"lch">;
-      const lab = lchToLab(lch);
-      const xyz50 = labToXyz50(lab);
-      const lrgb = xyz50ToLrgb(xyz50);
-      const rgb = lrgbToRgb(lrgb);
-      const hsv = rgbToHsv(rgb);
-      return switchMode([rgb, hsv, lrgb, xyz50], output);
-    }
-    case "oklab": {
-      const oklab = color as ColorSpace<"oklab">;
-      const lrgb = oklabToLrgb(oklab);
-      const xyz50 = lrgbToXyz50(lrgb);
-      const rgb = lrgbToRgb(lrgb);
-      const hsv = rgbToHsv(rgb);
-      return switchMode([rgb, hsv, lrgb, xyz50], output);
-    }
-    case "oklch": {
-      const oklch = color as ColorSpace<"oklch">;
-      const oklab = oklchToOklab(oklch);
-      const lrgb = oklabToLrgb(oklab);
-      const xyz50 = lrgbToXyz50(lrgb);
-      const rgb = lrgbToRgb(lrgb);
-      const hsv = rgbToHsv(rgb);
-      return switchMode([rgb, hsv, lrgb, xyz50], output);
-    }
-  }
+): ColorFormat<"hsl" | "hwb" | "lch" | "oklch"> => {
+  const compose = hueMode[input[0]];
+  return compose(input);
 };
 
 export {
@@ -278,5 +202,5 @@ export {
   convertOklab,
   convertOklch,
   convertColor,
-  switchColor,
+  convertHue,
 };
