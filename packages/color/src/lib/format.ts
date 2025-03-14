@@ -119,36 +119,6 @@ const formatCss = <T extends ColorMode>(
   return compose(input, config);
 };
 
-const switchCss = <T extends ColorMode>(
-  input: ColorFormat<T>,
-  config?: CssConfig,
-): string => {
-  const mode = input[0];
-  switch (mode) {
-    case "rgb": {
-      return formatRgb(input as ColorFormat<"rgb">);
-    }
-    case "hsl": {
-      return formatHsl(input as ColorFormat<"hsl">, config);
-    }
-    case "hwb": {
-      return formatHwb(input as ColorFormat<"hwb">, config);
-    }
-    case "lab": {
-      return formatLab(input as ColorFormat<"lab">, config);
-    }
-    case "lch": {
-      return formatLch(input as ColorFormat<"lch">, config);
-    }
-    case "oklab": {
-      return formatOklab(input as ColorFormat<"oklab">, config);
-    }
-    case "oklch": {
-      return formatOklch(input as ColorFormat<"oklch">, config);
-    }
-  }
-};
-
 export {
   formatRgb,
   formatHsl,
@@ -158,5 +128,4 @@ export {
   formatOklab,
   formatOklch,
   formatCss,
-  switchCss,
 };
