@@ -1,6 +1,6 @@
-import type { ReactNode, JSX } from "react";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import type { JSX, ReactNode } from "react";
 import "./style.css";
 
 const fontSans = Geist({
@@ -48,9 +48,7 @@ interface Props {
 export default function RootLayout({ children }: Props): JSX.Element {
   return (
     <html lang="en" className={`${fontSans.variable} ${fontMono.variable}`}>
-      <body className="bg-gray-950 font-mono font-normal text-gray-50">
-        {children}
-      </body>
+      <body className="bg-gray-950 font-mono font-normal text-gray-50">{children}</body>
     </html>
   );
 }

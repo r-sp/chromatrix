@@ -1,14 +1,10 @@
 {
-  "extends": "@repo/typescript-config/next.json",
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
+    "jsx": "preserve",
+    "incremental": true,
     "plugins": [{ "name": "next" }]
   },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    "next-env.d.ts",
-    "next.config.ts",
-    ".next/types/**/*.ts"
-  ],
+  "include": ["**/*.ts", "**/*.tsx", "next-env.d.ts", "next.config.ts", ".next/types/**/*.ts"],
   "exclude": [".next", "node_modules"]
 }
