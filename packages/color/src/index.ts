@@ -18,31 +18,4 @@ export { lrgbToOklab, oklabToLrgb } from "./mode/oklab";
 
 export { oklabToOklch, oklchToOklab } from "./mode/oklch";
 
-export {
-  convertRgb,
-  convertHsl,
-  convertHwb,
-  convertLab,
-  convertLch,
-  convertOklab,
-  convertOklch,
-  convertColor,
-  convertHue,
-} from "./lib/convert";
-
-export {
-  formatRgb,
-  formatHsl,
-  formatHwb,
-  formatLab,
-  formatLch,
-  formatOklab,
-  formatOklch,
-  formatCss,
-} from "./lib/format";
-
-export { createHarmony } from "./lib/harmony";
-
-export { createShades, createScales } from "./lib/interpolate";
-
-export { createPRNG, createToken, randomColor } from "./lib/random";
+export { createPRNG, createToken, randomColor, randomMode } from "./lib/random";

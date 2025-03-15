@@ -1,6 +1,0 @@
-node_modules
-.turbo
-.next
-.vercel
-pnpm-lock.yaml
-pnpm-workspace.yaml
