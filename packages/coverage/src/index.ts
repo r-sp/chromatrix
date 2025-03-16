@@ -1,10 +1,9 @@
-import { createPRNG, randomColor, randomMode } from "@repo/color/fn";
-
-console.time("benchmark");
+import { createPRNG, shuffleColor } from "@repo/color/fn";
 
 const token = createPRNG(Date.now());
 
-const mode = randomMode(token);
-const color = randomColor(mode, token);
+console.time("benchmark");
+
+const color = shuffleColor(token);
 
 console.timeLog("benchmark", color);
