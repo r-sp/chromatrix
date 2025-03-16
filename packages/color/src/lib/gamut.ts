@@ -80,4 +80,6 @@ const colorRange: {
   ],
 };
 
-export { colorGamut, colorRange };
+const colorKind: ColorMode[] = ["rgb", "hsl", "hwb", "lab", "lch", "oklab", "oklch"];
+
+export { colorGamut, colorRange, colorKind };
