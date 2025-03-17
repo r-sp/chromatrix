@@ -11,14 +11,14 @@ const hexToRgb = (input: string): ColorSpace<"rgb"> => {
     | null;
 
   if (!hex) {
-    return ["rgb", 0, 0, 0] as ColorSpace<"rgb">;
+    return ["rgb", 0, 0, 0];
   }
 
   const r = Number.parseInt(hex[1], 16);
   const g = Number.parseInt(hex[2], 16);
   const b = Number.parseInt(hex[3], 16);
 
-  return ["rgb", r, g, b] as ColorSpace<"rgb">;
+  return ["rgb", r, g, b];
 };
 
 export { rgbToHex, hexToRgb };

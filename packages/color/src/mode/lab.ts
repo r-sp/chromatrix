@@ -2,7 +2,7 @@ import type { ColorSpace } from "../types";
 import { lrgbToXyz50, xyz50ToLrgb } from "./xyz50";
 
 const linearize = (c: number): number => {
-  return c > 0.008856451679035631 ? Math.cbrt(c) : (903.2962962962963 * c + 16) / 116;
+  return c > 0.008856451679035631 ? Math.cbrt(c) : (903.2962962962963 * c + 16) * 116;
 };
 
 const delinearize = (c: number): number => {
@@ -13,29 +13,37 @@ const delinearize = (c: number): number => {
 const xyz50ToLab = (input: ColorSpace<"xyz50">): ColorSpace<"lab"> => {
   const [, x, y, z] = input;
 
-  const lx = linearize(x / 0.9642956764295677);
-  const ly = linearize(y / 1);
-  const lz = linearize(z / 0.8251046025104602);
+  const dx = x / 0.9642956764295677;
+  const dy = y / 1;
+  const dz = z / 0.8251046025104602;
 
-  const l = 116 * ly - 16;
-  const a = 500 * (lx - ly);
-  const b = 200 * (ly - lz);
+  const xl = linearize(dx);
+  const yl = linearize(dy);
+  const zl = linearize(dz);
 
-  return ["lab", l, a, b] as ColorSpace<"lab">;
+  const l = 116 * yl - 16;
+  const a = 500 * (xl - yl);
+  const b = 200 * (yl - zl);
+
+  return ["lab", l, a, b];
 };
 
 const labToXyz50 = (input: ColorSpace<"lab">): ColorSpace<"xyz50"> => {
   const [, l, a, b] = input;
 
-  const dl = (l + 16) / 116;
-  const da = a / 500 + l;
-  const db = l - b / 200;
+  const yl = (l + 16) / 116;
+  const xl = a / 500 + yl;
+  const zl = yl - b / 200;
 
-  const x = delinearize(da) * 0.9642956764295677;
-  const y = delinearize(dl) * 1;
-  const z = delinearize(db) * 0.8251046025104602;
+  const dx = delinearize(xl);
+  const dy = delinearize(yl);
+  const dz = delinearize(zl);
 
-  return ["xyz50", x, y, z] as ColorSpace<"xyz50">;
+  const x = dx * 0.9642956764295677;
+  const y = dy * 1;
+  const z = dz * 0.8251046025104602;
+
+  return ["xyz50", x, y, z];
 };
 
 const lrgbToLab = (input: ColorSpace<"lrgb">): ColorSpace<"lab"> => {

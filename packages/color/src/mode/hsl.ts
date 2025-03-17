@@ -14,7 +14,7 @@ const hsvToHsl = (input: ColorSpace<"hsv">): ColorSpace<"hsl"> => {
     sl = 0;
   }
 
-  return ["hsl", h, sl, l] as ColorSpace<"hsl">;
+  return ["hsl", h, sl, l];
 };
 
 const hslToHsv = (input: ColorSpace<"hsl">): ColorSpace<"hsv"> => {
@@ -24,7 +24,7 @@ const hslToHsv = (input: ColorSpace<"hsl">): ColorSpace<"hsv"> => {
 
   const sv = v === 0 ? 0 : 2 * (1 - l / v);
 
-  return ["hsv", h, sv, v] as ColorSpace<"hsv">;
+  return ["hsv", h, sv, v];
 };
 
 const lrgbToHsl = (input: ColorSpace<"lrgb">): ColorSpace<"hsl"> => {
