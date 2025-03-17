@@ -31,7 +31,7 @@ const rgbToHsv = (input: ColorSpace<"rgb">): ColorSpace<"hsv"> => {
     s = d / v;
   }
 
-  return ["hsv", h, s, v] as ColorSpace<"hsv">;
+  return ["hsv", h, s, v];
 };
 
 const hsvToRgb = (input: ColorSpace<"hsv">): ColorSpace<"rgb"> => {
@@ -83,7 +83,7 @@ const hsvToRgb = (input: ColorSpace<"hsv">): ColorSpace<"rgb"> => {
     b = x + o;
   }
 
-  return ["rgb", r, g, b] as ColorSpace<"rgb">;
+  return ["rgb", r, g, b];
 };
 
 export { rgbToHsv, hsvToRgb };

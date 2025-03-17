@@ -8,7 +8,7 @@ const hsvToHwb = (input: ColorSpace<"hsv">): ColorSpace<"hwb"> => {
   const w = (1 - s) * v;
   const b = 1 - v;
 
-  return ["hwb", hue, w, b] as ColorSpace<"hwb">;
+  return ["hwb", hue, w, b];
 };
 
 const hwbToHsv = (input: ColorSpace<"hwb">): ColorSpace<"hsv"> => {
@@ -23,7 +23,7 @@ const hwbToHsv = (input: ColorSpace<"hwb">): ColorSpace<"hsv"> => {
     s = 1 - w / v;
   }
 
-  return ["hsv", h, s, v] as ColorSpace<"hsv">;
+  return ["hsv", h, s, v];
 };
 
 const lrgbToHwb = (input: ColorSpace<"lrgb">): ColorSpace<"hwb"> => {
