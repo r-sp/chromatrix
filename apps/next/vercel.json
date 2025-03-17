@@ -16,5 +16,13 @@
       "source": "/github",
       "destination": "https://github.com/r-sp/chromatrix"
     }
-  ]
+  ],
+  "git": {
+    "deploymentEnabled": {
+      "main": false,
+      "packages": false,
+      "next": true,
+      "staging": true
+    }
+  }
 }
