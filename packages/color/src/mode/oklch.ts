@@ -1,5 +1,4 @@
 import type { ColorSpace } from "../types";
-import { lrgbToOklab, oklabToLrgb } from "./oklab";
 
 const oklabToOklch = (input: ColorSpace<"oklab">): ColorSpace<"oklch"> => {
   const [, l, a, b] = input;
@@ -29,14 +28,4 @@ const oklchToOklab = (input: ColorSpace<"oklch">): ColorSpace<"oklab"> => {
   return ["oklab", l, a, b];
 };
 
-const lrgbToOklch = (input: ColorSpace<"lrgb">): ColorSpace<"oklch"> => {
-  const oklab = lrgbToOklab(input);
-  return oklabToOklch(oklab);
-};
-
-const oklchToLrgb = (input: ColorSpace<"oklch">): ColorSpace<"lrgb"> => {
-  const oklab = oklchToOklab(input);
-  return oklabToLrgb(oklab);
-};
-
-export { oklabToOklch, oklchToOklab, lrgbToOklch, oklchToLrgb };
+export { oklabToOklch, oklchToOklab };
