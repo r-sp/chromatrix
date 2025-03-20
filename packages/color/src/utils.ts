@@ -1,6 +1,6 @@
-import type { ColorMode, ColorSpace } from "./types";
+import type { ColorFormat, ColorMode } from "./types";
 
-const clamp = (value: number, min = 0, max = 1) => {
+const clamp = (value: number, min = 0, max = 1): number => {
   return value > max ? max : value < min ? min : value;
 };
 
@@ -12,7 +12,7 @@ const round = (value: number, float = 0): number => {
   return Math.round(value * digit) / digit;
 };
 
-const nearest = <T extends ColorMode>(input: ColorSpace<T>, float = 0): ColorSpace<T> => {
+const nearest = <T extends ColorMode>(input: ColorFormat<T>, float = 0): ColorFormat<T> => {
   let [mode, c, t, x] = input;
 
   if (mode === "rgb") {
@@ -36,4 +36,10 @@ const nearest = <T extends ColorMode>(input: ColorSpace<T>, float = 0): ColorSpa
   return [mode, c, t, x];
 };
 
-export { clamp, round, nearest };
+type UnaryFunction<T, R> = (arg: T) => R;
+
+const compose = <R>(...fns: UnaryFunction<any, any>[]): UnaryFunction<any, R> => {
+  return (x: any) => fns.reduceRight((acc, fn) => fn(acc), x) as R;
+};
+
+export { clamp, round, nearest, compose };
