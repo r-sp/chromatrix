@@ -1,7 +1,7 @@
-import type { ColorSpace } from "../types";
+import type { ColorFn, ColorSpace } from "../types";
 
-const oklabToOklch = (input: ColorSpace<"oklab">): ColorSpace<"oklch"> => {
-  const [, l, a, b] = input;
+const oklabToOklch: ColorFn<"oklab", "oklch"> = (input) => {
+  const [l, a, b] = input;
 
   const x = a * a;
   const y = b * b;
@@ -14,18 +14,18 @@ const oklabToOklch = (input: ColorSpace<"oklab">): ColorSpace<"oklch"> => {
     h += 360;
   }
 
-  return ["oklch", l, c, h];
+  return [l, c, h] as ColorSpace<"oklch">;
 };
 
-const oklchToOklab = (input: ColorSpace<"oklch">): ColorSpace<"oklab"> => {
-  const [, l, c, h] = input;
+const oklchToOklab: ColorFn<"oklch", "oklab"> = (input) => {
+  const [l, c, h] = input;
 
   const d = Math.PI / 180;
   const r = h * d;
   const a = c * Math.cos(r);
   const b = c * Math.sin(r);
 
-  return ["oklab", l, a, b];
+  return [l, a, b] as ColorSpace<"oklab">;
 };
 
 export { oklabToOklch, oklchToOklab };

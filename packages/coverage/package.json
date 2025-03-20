@@ -4,10 +4,9 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "build": "tsup --onSuccess 'pnpm run test'",
-    "dev": "tsup --watch --onSuccess 'pnpm run test'",
+    "build": "tsup",
+    "dev": "tsup --watch",
     "clean": "rm -rf dist",
-    "test": "node dist/index.js",
     "reset": "rm -rf node_modules"
   },
   "devDependencies": {

@@ -1,14 +1,14 @@
 import { convertColor } from "@repo/color/fn";
-import type { ColorMode, ColorSpace } from "@repo/color/types";
+import type { ColorFormat, ColorMode } from "@repo/color/types";
 
 const shuffleColor = <T extends ColorMode>(
-  input: ColorSpace<T>,
+  input: ColorFormat<T>,
 ): {
-  [I in ColorMode]: ColorSpace<I>;
+  [I in ColorMode]: ColorFormat<I>;
 } => {
   switch (input[0]) {
     case "rgb": {
-      const rgb = input as ColorSpace<"rgb">;
+      const rgb = input as ColorFormat<"rgb">;
       return {
         rgb: rgb,
         hsl: convertColor(rgb, "hsl"),
@@ -20,7 +20,7 @@ const shuffleColor = <T extends ColorMode>(
       };
     }
     case "hsl": {
-      const hsl = input as ColorSpace<"hsl">;
+      const hsl = input as ColorFormat<"hsl">;
       return {
         rgb: convertColor(hsl, "rgb"),
         hsl: hsl,
@@ -32,7 +32,7 @@ const shuffleColor = <T extends ColorMode>(
       };
     }
     case "hwb": {
-      const hwb = input as ColorSpace<"hwb">;
+      const hwb = input as ColorFormat<"hwb">;
       return {
         rgb: convertColor(hwb, "rgb"),
         hsl: convertColor(hwb, "hsl"),
@@ -44,7 +44,7 @@ const shuffleColor = <T extends ColorMode>(
       };
     }
     case "lab": {
-      const lab = input as ColorSpace<"lab">;
+      const lab = input as ColorFormat<"lab">;
       return {
         rgb: convertColor(lab, "rgb"),
         hsl: convertColor(lab, "hsl"),
@@ -56,7 +56,7 @@ const shuffleColor = <T extends ColorMode>(
       };
     }
     case "lch": {
-      const lch = input as ColorSpace<"lch">;
+      const lch = input as ColorFormat<"lch">;
       return {
         rgb: convertColor(lch, "rgb"),
         hsl: convertColor(lch, "hsl"),
@@ -68,7 +68,7 @@ const shuffleColor = <T extends ColorMode>(
       };
     }
     case "oklab": {
-      const oklab = input as ColorSpace<"oklab">;
+      const oklab = input as ColorFormat<"oklab">;
       return {
         rgb: convertColor(oklab, "rgb"),
         hsl: convertColor(oklab, "hsl"),
@@ -80,7 +80,7 @@ const shuffleColor = <T extends ColorMode>(
       };
     }
     case "oklch": {
-      const oklch = input as ColorSpace<"oklch">;
+      const oklch = input as ColorFormat<"oklch">;
       return {
         rgb: convertColor(oklch, "rgb"),
         hsl: convertColor(oklch, "hsl"),

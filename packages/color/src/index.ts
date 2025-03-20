@@ -20,6 +20,6 @@ export { oklabToOklch, oklchToOklab } from "./mode/oklch";
 
 export { lrgbToXyz65, xyz65ToLrgb, xyz50ToXyz65, xyz65ToXyz50 } from "./mode/xyz65";
 
-export { convertColor } from "./lib/convert";
+export { converter, convertColor } from "./lib/convert";
 
 export { createPRNG, createToken, randomColor, randomMode } from "./lib/random";

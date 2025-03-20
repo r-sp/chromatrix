@@ -1,7 +1,7 @@
-import type { ColorSpace } from "../types";
+import type { ColorFn, ColorSpace } from "../types";
 
-const lrgbToXyz50 = (input: ColorSpace<"lrgb">): ColorSpace<"xyz50"> => {
-  const [, lr, lg, lb] = input;
+const lrgbToXyz50: ColorFn<"lrgb", "xyz50"> = (input) => {
+  const [lr, lg, lb] = input;
 
   const xr = lr * 0.436065742824811;
   const xg = lg * 0.3851514688337912;
@@ -19,11 +19,11 @@ const lrgbToXyz50 = (input: ColorSpace<"lrgb">): ColorSpace<"xyz50"> => {
   const y = yr + yg + yb;
   const z = zr + zg + zb;
 
-  return ["xyz50", x, y, z];
+  return [x, y, z] as ColorSpace<"xyz50">;
 };
 
-const xyz50ToLrgb = (input: ColorSpace<"xyz50">): ColorSpace<"lrgb"> => {
-  const [, x, y, z] = input;
+const xyz50ToLrgb: ColorFn<"xyz50", "lrgb"> = (input) => {
+  const [x, y, z] = input;
 
   const rx = x * 3.1341359569958707;
   const ry = y * 1.6173863321612538;
@@ -41,7 +41,7 @@ const xyz50ToLrgb = (input: ColorSpace<"xyz50">): ColorSpace<"lrgb"> => {
   const lg = gx + gy + gz;
   const lb = bx - by + bz;
 
-  return ["lrgb", lr, lg, lb];
+  return [lr, lg, lb] as ColorSpace<"lrgb">;
 };
 
 export { lrgbToXyz50, xyz50ToLrgb };

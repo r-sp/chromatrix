@@ -1,4 +1,4 @@
-import type { ColorSpace } from "../types";
+import type { ColorFn, ColorSpace } from "../types";
 
 const linearize = (c: number): number => {
   return c > 0.008856451679035631 ? Math.cbrt(c) : (903.2962962962963 * c + 16) * 116;
@@ -9,8 +9,8 @@ const delinearize = (c: number): number => {
   return p > 0.008856451679035631 ? p : (116 * c - 16) / 903.2962962962963;
 };
 
-const xyz50ToLab = (input: ColorSpace<"xyz50">): ColorSpace<"lab"> => {
-  const [, x, y, z] = input;
+const xyz50ToLab: ColorFn<"xyz50", "lab"> = (input) => {
+  const [x, y, z] = input;
 
   const dx = x / 0.9642956764295677;
   const dy = y / 1;
@@ -24,11 +24,11 @@ const xyz50ToLab = (input: ColorSpace<"xyz50">): ColorSpace<"lab"> => {
   const a = 500 * (xl - yl);
   const b = 200 * (yl - zl);
 
-  return ["lab", l, a, b];
+  return [l, a, b] as ColorSpace<"lab">;
 };
 
-const labToXyz50 = (input: ColorSpace<"lab">): ColorSpace<"xyz50"> => {
-  const [, l, a, b] = input;
+const labToXyz50: ColorFn<"lab", "xyz50"> = (input) => {
+  const [l, a, b] = input;
 
   const yl = (l + 16) / 116;
   const xl = a / 500 + yl;
@@ -42,7 +42,7 @@ const labToXyz50 = (input: ColorSpace<"lab">): ColorSpace<"xyz50"> => {
   const y = dy * 1;
   const z = dz * 0.8251046025104602;
 
-  return ["xyz50", x, y, z];
+  return [x, y, z] as ColorSpace<"xyz50">;
 };
 
 export { xyz50ToLab, labToXyz50 };
