@@ -1,7 +1,7 @@
 import type { ColorSpace } from "../types";
 
 const rgbToHex = (input: ColorSpace<"rgb">) => {
-  const [, r, g, b] = input;
+  const [r, g, b] = input;
   return ((1 << 24) | (r << 16) | (g << 8) | b).toString(16).slice(1);
 };
 
@@ -11,14 +11,14 @@ const hexToRgb = (input: string): ColorSpace<"rgb"> => {
     | null;
 
   if (!hex) {
-    return ["rgb", 0, 0, 0];
+    return [0, 0, 0] as ColorSpace<"rgb">;
   }
 
   const r = Number.parseInt(hex[1], 16);
   const g = Number.parseInt(hex[2], 16);
   const b = Number.parseInt(hex[3], 16);
 
-  return ["rgb", r, g, b];
+  return [r, g, b] as ColorSpace<"rgb">;
 };
 
 export { rgbToHex, hexToRgb };

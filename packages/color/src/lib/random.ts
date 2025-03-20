@@ -1,4 +1,4 @@
-import type { ColorMode, ColorSpace } from "../types";
+import type { ColorFormat, ColorMode } from "../types";
 import { colorKind, colorRange } from "./gamut";
 
 const createPRNG = (value: number): { token: () => number } => {
@@ -23,14 +23,14 @@ const createToken = (prng: { token: () => number }, min: number, max: number): n
 const randomColor = <T extends ColorMode>(
   mode: T,
   prng: { token: () => number },
-): ColorSpace<T> => {
+): ColorFormat<T> => {
   const [cr, tr, xr] = colorRange[mode];
 
   const c = createToken(prng, cr[0], cr[1]);
   const t = createToken(prng, tr[0], tr[1]);
   const x = createToken(prng, xr[0], xr[1]);
 
-  return [mode, c, t, x] as ColorSpace<T>;
+  return [mode, c, t, x] as ColorFormat<T>;
 };
 
 const randomMode = (prng: { token: () => number }): ColorMode => {

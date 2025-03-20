@@ -1,7 +1,7 @@
-import type { ColorSpace } from "../types";
+import type { ColorFn, ColorSpace } from "../types";
 
-const labToLch = (input: ColorSpace<"lab">): ColorSpace<"lch"> => {
-  const [, l, a, b] = input;
+const labToLch: ColorFn<"lab", "lch"> = (input) => {
+  const [l, a, b] = input;
 
   const x = a * a;
   const y = b * b;
@@ -14,18 +14,18 @@ const labToLch = (input: ColorSpace<"lab">): ColorSpace<"lch"> => {
     h += 360;
   }
 
-  return ["lch", l, c, h];
+  return [l, c, h] as ColorSpace<"lch">;
 };
 
-const lchToLab = (input: ColorSpace<"lch">): ColorSpace<"lab"> => {
-  const [, l, c, h] = input;
+const lchToLab: ColorFn<"lch", "lab"> = (input) => {
+  const [l, c, h] = input;
 
   const d = Math.PI / 180;
   const r = h * d;
   const a = c * Math.cos(r);
   const b = c * Math.sin(r);
 
-  return ["lab", l, a, b];
+  return [l, a, b] as ColorSpace<"lab">;
 };
 
 export { labToLch, lchToLab };

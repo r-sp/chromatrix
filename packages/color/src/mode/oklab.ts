@@ -1,7 +1,7 @@
-import type { ColorSpace } from "../types";
+import type { ColorFn, ColorSpace } from "../types";
 
-const lrgbToOklab = (input: ColorSpace<"lrgb">): ColorSpace<"oklab"> => {
-  const [, lr, lg, lb] = input;
+const lrgbToOklab: ColorFn<"lrgb", "oklab"> = (input) => {
+  const [lr, lg, lb] = input;
 
   const cr = lr * 0.41222147079999993;
   const cg = lg * 0.5363325363;
@@ -35,11 +35,11 @@ const lrgbToOklab = (input: ColorSpace<"lrgb">): ColorSpace<"oklab"> => {
   const a = al - am + as;
   const b = bl + bm - bs;
 
-  return ["oklab", l, a, b];
+  return [l, a, b] as ColorSpace<"oklab">;
 };
 
-const oklabToLrgb = (input: ColorSpace<"oklab">): ColorSpace<"lrgb"> => {
-  const [, l, a, b] = input;
+const oklabToLrgb: ColorFn<"oklab", "lrgb"> = (input) => {
+  const [l, a, b] = input;
 
   const cl = l * 0.99999999845051981432;
   const ca = a * 0.39633779217376785678;
@@ -73,7 +73,7 @@ const oklabToLrgb = (input: ColorSpace<"oklab">): ColorSpace<"lrgb"> => {
   const lg = gl + gm - gs;
   const lb = bl - bm + bs;
 
-  return ["lrgb", lr, lg, lb];
+  return [lr, lg, lb] as ColorSpace<"lrgb">;
 };
 
 export { lrgbToOklab, oklabToLrgb };

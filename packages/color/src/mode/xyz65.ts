@@ -1,7 +1,7 @@
-import type { ColorSpace } from "../types";
+import type { ColorFn, ColorSpace } from "../types";
 
-const lrgbToXyz65 = (input: ColorSpace<"lrgb">): ColorSpace<"xyz65"> => {
-  const [, lr, lg, lb] = input;
+const lrgbToXyz65: ColorFn<"lrgb", "xyz65"> = (input) => {
+  const [lr, lg, lb] = input;
 
   const xr = lr * 0.4123907992659593;
   const xg = lg * 0.357584339383878;
@@ -19,11 +19,11 @@ const lrgbToXyz65 = (input: ColorSpace<"lrgb">): ColorSpace<"xyz65"> => {
   const y = yr + yg + yb;
   const z = zr + zg + zb;
 
-  return ["xyz65", x, y, z];
+  return [x, y, z] as ColorSpace<"xyz65">;
 };
 
-const xyz65ToLrgb = (input: ColorSpace<"xyz65">): ColorSpace<"lrgb"> => {
-  const [, x, y, z] = input;
+const xyz65ToLrgb: ColorFn<"xyz65", "lrgb"> = (input) => {
+  const [x, y, z] = input;
 
   const rx = x * 3.2409699419045226;
   const ry = y * 1.5373831775700939;
@@ -41,11 +41,11 @@ const xyz65ToLrgb = (input: ColorSpace<"xyz65">): ColorSpace<"lrgb"> => {
   const lg = gx + gy + gz;
   const lb = bx - by + bz;
 
-  return ["lrgb", lr, lg, lb];
+  return [lr, lg, lb] as ColorSpace<"lrgb">;
 };
 
-const xyz50ToXyz65 = (input: ColorSpace<"xyz50">): ColorSpace<"xyz65"> => {
-  const [, x, y, z] = input;
+const xyz50ToXyz65: ColorFn<"xyz50", "xyz65"> = (input) => {
+  const [x, y, z] = input;
 
   const xl = x * 0.9554734527042182;
   const yl = y * 0.0230985368742614;
@@ -63,11 +63,11 @@ const xyz50ToXyz65 = (input: ColorSpace<"xyz50">): ColorSpace<"xyz65"> => {
   const by = xm + ym + zm;
   const bz = xs - ys + zs;
 
-  return ["xyz65", bx, by, bz];
+  return [bx, by, bz] as ColorSpace<"xyz65">;
 };
 
-const xyz65ToXyz50 = (input: ColorSpace<"xyz65">): ColorSpace<"xyz50"> => {
-  const [, x, y, z] = input;
+const xyz65ToXyz50: ColorFn<"xyz65", "xyz50"> = (input) => {
+  const [x, y, z] = input;
 
   const xl = x * 1.0479298208405488;
   const yl = y * 0.0229467933410191;
@@ -85,7 +85,7 @@ const xyz65ToXyz50 = (input: ColorSpace<"xyz65">): ColorSpace<"xyz50"> => {
   const by = xm + ym - zm;
   const bz = xs + ys + zs;
 
-  return ["xyz50", bx, by, bz];
+  return [bx, by, bz] as ColorSpace<"xyz50">;
 };
 
 export { lrgbToXyz65, xyz65ToLrgb, xyz50ToXyz65, xyz65ToXyz50 };
