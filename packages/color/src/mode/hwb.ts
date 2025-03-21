@@ -13,13 +13,7 @@ const hwbToHsv: ColorFn<"hwb", "hsv"> = (input) => {
   const [h, w, b] = input;
 
   const v = 1 - b;
-  let s: number;
-
-  if (v === 0) {
-    s = 0;
-  } else {
-    s = 1 - w / v;
-  }
+  const s = v === 0 ? 0 : 1 - w / v;
 
   return [h, s, v] as ColorSpace<"hsv">;
 };

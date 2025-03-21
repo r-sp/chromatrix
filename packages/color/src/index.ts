@@ -22,4 +22,6 @@ export { lrgbToXyz65, xyz65ToLrgb, xyz50ToXyz65, xyz65ToXyz50 } from "./mode/xyz
 
 export { converter, convertColor } from "./lib/convert";
 
+export { formatCss } from "./lib/format";
+
 export { createPRNG, createToken, randomColor, randomMode } from "./lib/random";

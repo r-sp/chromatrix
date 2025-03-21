@@ -8,7 +8,6 @@ const rgbToHsv: ColorFn<"rgb", "hsv"> = (input) => {
   const d = v - m;
 
   let h: number;
-  let s: number;
 
   if (d === 0) {
     h = 0;
@@ -25,11 +24,7 @@ const rgbToHsv: ColorFn<"rgb", "hsv"> = (input) => {
     h += 360;
   }
 
-  if (v === 0) {
-    s = 0;
-  } else {
-    s = d / v;
-  }
+  const s = v === 0 ? 0 : d / v;
 
   return [h, s, v] as ColorSpace<"hsv">;
 };
