@@ -1,10 +1,20 @@
-import { convertColor } from "@repo/color/fn";
-import type { ColorFormat } from "@repo/color/types";
+import { convertColor, createPRNG, randomColor } from "@repo/color/fn";
+import { nearest } from "@repo/color/utils";
+import { createToken } from "../utils";
 
-const input: ColorFormat<"rgb"> = ["rgb", 0, 0, 0];
+const token = createPRNG(createToken());
+const input = randomColor("oklab", token);
+const output: ReturnType<typeof randomColor>[] = [];
 
 console.time("benchmark");
 
-const output = convertColor(input, "lch");
+for (let i = 0; i < 1000; i++) {
+  output.push(convertColor(input, "lab"));
+}
 
-console.timeLog("benchmark", output);
+console.timeLog("benchmark", {
+  from: nearest(input, 3),
+
+  // biome-ignore lint/style/noNonNullAssertion: <explanation>
+  to: nearest(output[0]!, 3),
+});
