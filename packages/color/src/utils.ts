@@ -15,23 +15,22 @@ const round = (value: number, float = 0): number => {
 const nearest = <T extends ColorMode>(input: ColorFormat<T>, float = 0): ColorFormat<T> => {
   let [mode, c, t, x] = input;
 
-  if (mode === "rgb") {
-    c = clamp(c);
-    t = clamp(t);
-    x = clamp(x);
-    c *= 255;
-    t *= 255;
-    x *= 255;
-  } else if (mode === "hsl" || mode === "hwb") {
-    t = clamp(t);
-    x = clamp(x);
-    t *= 100;
-    x *= 100;
-  }
+  const rgbGamut = 255;
+  const hsvGamut = 100;
 
-  c = round(c, float);
-  t = round(t, float);
-  x = round(x, float);
+  if (mode === "rgb") {
+    c = round(clamp(c) * rgbGamut, float);
+    t = round(clamp(t) * rgbGamut, float);
+    x = round(clamp(x) * rgbGamut, float);
+  } else if (mode === "hsl" || mode === "hwb") {
+    c = round(clamp(c, 0), float);
+    t = round(clamp(t) * hsvGamut, float);
+    x = round(clamp(x) * hsvGamut, float);
+  } else {
+    c = round(c, float);
+    t = round(t, float);
+    x = round(x, float);
+  }
 
   return [mode, c, t, x];
 };
