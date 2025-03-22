@@ -16,7 +16,7 @@
     "reset": "rm -rf node_modules"
   },
   "devDependencies": {
-    "@types/node": "^22.13.9",
+    "@types/node": "^22.13.11",
     "tsup": "^8.4.0",
     "typescript": "^5.8.2"
   }
