@@ -1,7 +1,9 @@
 import type { ColorFn, ColorSpace } from "../types";
 
 const rgbToHsv: ColorFn<"rgb", "hsv"> = (input) => {
-  const [r, g, b] = input;
+  const r = input[0];
+  const g = input[1];
+  const b = input[2];
 
   const v = Math.max(r, g, b);
   const m = Math.min(r, g, b);
@@ -30,7 +32,9 @@ const rgbToHsv: ColorFn<"rgb", "hsv"> = (input) => {
 };
 
 const hsvToRgb: ColorFn<"hsv", "rgb"> = (input) => {
-  const [h, s, v] = input;
+  const h = input[0];
+  const s = input[1];
+  const v = input[2];
 
   let r: number;
   let g: number;

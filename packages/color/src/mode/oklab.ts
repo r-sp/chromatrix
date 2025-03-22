@@ -1,7 +1,9 @@
 import type { ColorFn, ColorSpace } from "../types";
 
 const lrgbToOklab: ColorFn<"lrgb", "oklab"> = (input) => {
-  const [lr, lg, lb] = input;
+  const lr = input[0];
+  const lg = input[1];
+  const lb = input[2];
 
   const cr = lr * 0.41222147079999993;
   const cg = lg * 0.5363325363;
@@ -39,7 +41,9 @@ const lrgbToOklab: ColorFn<"lrgb", "oklab"> = (input) => {
 };
 
 const oklabToLrgb: ColorFn<"oklab", "lrgb"> = (input) => {
-  const [l, a, b] = input;
+  const l = input[0];
+  const a = input[1];
+  const b = input[2];
 
   const cl = l * 0.99999999845051981432;
   const ca = a * 0.39633779217376785678;

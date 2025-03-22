@@ -1,7 +1,9 @@
 import type { ColorFn, ColorSpace } from "../types";
 
 const labToLch: ColorFn<"lab", "lch"> = (input) => {
-  const [l, a, b] = input;
+  const l = input[0];
+  const a = input[1];
+  const b = input[2];
 
   const x = a * a;
   const y = b * b;
@@ -18,7 +20,9 @@ const labToLch: ColorFn<"lab", "lch"> = (input) => {
 };
 
 const lchToLab: ColorFn<"lch", "lab"> = (input) => {
-  const [l, c, h] = input;
+  const l = input[0];
+  const c = input[1];
+  const h = input[2];
 
   const d = Math.PI / 180;
   const r = h * d;
