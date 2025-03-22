@@ -78,9 +78,10 @@ const convertColor = <T extends ColorMode, R extends Exclude<ColorMode, T>>(
   input: ColorFormat<T>,
   output: R,
 ): ColorFormat<R> => {
-  const color = converter[input[0]][output](input.slice(1) as ColorSpace<T>) as ColorSpace<R>;
+  const [mode, ...value] = input;
+  const color = converter[mode][output];
 
-  return [output, ...color] as ColorFormat<R>;
+  return [output, ...color(value as ColorSpace<T>)] as ColorFormat<R>;
 };
 
 export { converter, convertColor };
