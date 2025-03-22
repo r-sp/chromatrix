@@ -1,7 +1,7 @@
 import type { ColorFn, ColorSpace } from "../types";
 
 const linearize = (c: number): number => {
-  return c > 0.008856451679035631 ? Math.cbrt(c) : (903.2962962962963 * c + 16) * 116;
+  return c > 0.008856451679035631 ? Math.cbrt(c) : (903.2962962962963 * c + 16) / 116;
 };
 
 const delinearize = (c: number): number => {
@@ -10,7 +10,9 @@ const delinearize = (c: number): number => {
 };
 
 const xyz50ToLab: ColorFn<"xyz50", "lab"> = (input) => {
-  const [x, y, z] = input;
+  const x = input[0];
+  const y = input[1];
+  const z = input[2];
 
   const dx = x / 0.9642956764295677;
   const dy = y / 1;
@@ -28,7 +30,9 @@ const xyz50ToLab: ColorFn<"xyz50", "lab"> = (input) => {
 };
 
 const labToXyz50: ColorFn<"lab", "xyz50"> = (input) => {
-  const [l, a, b] = input;
+  const l = input[0];
+  const a = input[1];
+  const b = input[2];
 
   const yl = (l + 16) / 116;
   const xl = a / 500 + yl;

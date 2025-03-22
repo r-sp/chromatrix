@@ -23,7 +23,7 @@ const nearest = <T extends ColorMode>(input: ColorFormat<T>, float = 0): ColorFo
     t = round(clamp(t) * rgbGamut, float);
     x = round(clamp(x) * rgbGamut, float);
   } else if (mode === "hsl" || mode === "hwb") {
-    c = round(clamp(c, 0), float);
+    c = round(c, float);
     t = round(clamp(t) * hsvGamut, float);
     x = round(clamp(x) * hsvGamut, float);
   } else {

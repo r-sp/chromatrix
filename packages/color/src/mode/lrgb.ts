@@ -11,21 +11,17 @@ const delinearize = (c: number): number => {
 };
 
 const rgbToLrgb: ColorFn<"rgb", "lrgb"> = (input) => {
-  const [r, g, b] = input;
-
-  const lr = linearize(r);
-  const lg = linearize(g);
-  const lb = linearize(b);
+  const lr = linearize(input[0]);
+  const lg = linearize(input[1]);
+  const lb = linearize(input[2]);
 
   return [lr, lg, lb] as ColorSpace<"lrgb">;
 };
 
 const lrgbToRgb: ColorFn<"lrgb", "rgb"> = (input) => {
-  const [lr, lg, lb] = input;
-
-  const r = delinearize(lr);
-  const g = delinearize(lg);
-  const b = delinearize(lb);
+  const r = delinearize(input[0]);
+  const g = delinearize(input[1]);
+  const b = delinearize(input[2]);
 
   return [r, g, b] as ColorSpace<"rgb">;
 };

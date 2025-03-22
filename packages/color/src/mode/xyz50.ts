@@ -1,7 +1,9 @@
 import type { ColorFn, ColorSpace } from "../types";
 
 const lrgbToXyz50: ColorFn<"lrgb", "xyz50"> = (input) => {
-  const [lr, lg, lb] = input;
+  const lr = input[0];
+  const lg = input[1];
+  const lb = input[2];
 
   const xr = lr * 0.436065742824811;
   const xg = lg * 0.3851514688337912;
@@ -23,7 +25,9 @@ const lrgbToXyz50: ColorFn<"lrgb", "xyz50"> = (input) => {
 };
 
 const xyz50ToLrgb: ColorFn<"xyz50", "lrgb"> = (input) => {
-  const [x, y, z] = input;
+  const x = input[0];
+  const y = input[1];
+  const z = input[2];
 
   const rx = x * 3.1341359569958707;
   const ry = y * 1.6173863321612538;

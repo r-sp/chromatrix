@@ -1,7 +1,9 @@
 import type { ColorFn, ColorSpace } from "../types";
 
 const lrgbToXyz65: ColorFn<"lrgb", "xyz65"> = (input) => {
-  const [lr, lg, lb] = input;
+  const lr = input[0];
+  const lg = input[1];
+  const lb = input[2];
 
   const xr = lr * 0.4123907992659593;
   const xg = lg * 0.357584339383878;
@@ -23,7 +25,9 @@ const lrgbToXyz65: ColorFn<"lrgb", "xyz65"> = (input) => {
 };
 
 const xyz65ToLrgb: ColorFn<"xyz65", "lrgb"> = (input) => {
-  const [x, y, z] = input;
+  const x = input[0];
+  const y = input[1];
+  const z = input[2];
 
   const rx = x * 3.2409699419045226;
   const ry = y * 1.5373831775700939;
@@ -45,7 +49,9 @@ const xyz65ToLrgb: ColorFn<"xyz65", "lrgb"> = (input) => {
 };
 
 const xyz50ToXyz65: ColorFn<"xyz50", "xyz65"> = (input) => {
-  const [x, y, z] = input;
+  const x = input[0];
+  const y = input[1];
+  const z = input[2];
 
   const xl = x * 0.9554734527042182;
   const yl = y * 0.0230985368742614;
@@ -67,7 +73,9 @@ const xyz50ToXyz65: ColorFn<"xyz50", "xyz65"> = (input) => {
 };
 
 const xyz65ToXyz50: ColorFn<"xyz65", "xyz50"> = (input) => {
-  const [x, y, z] = input;
+  const x = input[0];
+  const y = input[1];
+  const z = input[2];
 
   const xl = x * 1.0479298208405488;
   const yl = y * 0.0229467933410191;
