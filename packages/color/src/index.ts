@@ -20,8 +20,12 @@ export { oklabToOklch, oklchToOklab } from "./mode/oklch";
 
 export { lrgbToXyz65, xyz65ToLrgb, xyz50ToXyz65, xyz65ToXyz50 } from "./mode/xyz65";
 
-export { converter, convertColor } from "./lib/convert";
+export { converter, convertColor, convertHue } from "./lib/convert";
 
 export { formatCss } from "./lib/format";
+
+export { createHarmony } from "./lib/harmony";
+
+export { createShades, createScales } from "./lib/interpolate";
 
 export { createPRNG, createToken, randomColor, randomMode } from "./lib/random";
