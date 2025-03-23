@@ -5,6 +5,9 @@ export default defineConfig({
   splitting: true,
   entry: {
     convert: "./src/test/convert.ts",
+    harmony: "./src/test/harmony.ts",
+    scales: "./src/test/scales.ts",
+    shades: "./src/test/shades.ts",
     shuffle: "./src/test/shuffle.ts",
   },
   dts: true,
