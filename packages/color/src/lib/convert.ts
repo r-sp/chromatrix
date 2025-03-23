@@ -84,4 +84,24 @@ const convertColor = <T extends ColorMode, R extends Exclude<ColorMode, T>>(
   return [output, ...color(value as ColorSpace<T>)] as ColorFormat<R>;
 };
 
-export { converter, convertColor };
+const convertHue = <T extends ColorMode>(
+  input: ColorFormat<T>,
+): ColorFormat<"hsl" | "hwb" | "lch" | "oklch"> => {
+  const [mode, ...value] = input;
+  let output: ColorFormat<"hsl" | "hwb" | "lch" | "oklch">;
+
+  if (mode === "rgb") {
+    const color = compose<ColorSpace<"hsl">>(hsvToHsl, rgbToHsv);
+    output = ["hsl", ...color(value as ColorSpace<"rgb">)] as ColorFormat<"hsl">;
+  } else if (mode === "lab") {
+    output = ["lch", ...labToLch(value as ColorSpace<"lab">)] as ColorFormat<"lch">;
+  } else if (mode === "oklab") {
+    output = ["oklch", ...oklabToOklch(value as ColorSpace<"oklab">)] as ColorFormat<"oklch">;
+  } else {
+    output = input as ColorFormat<"hsl" | "hwb" | "lch" | "oklch">;
+  }
+
+  return output;
+};
+
+export { converter, convertColor, convertHue };
