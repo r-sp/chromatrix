@@ -1,9 +1,9 @@
-import { createPRNG, randomColor, randomMode } from "@repo/color/fn";
+import { randomColor, randomMode } from "@repo/color/fn";
 import { nearest } from "@repo/color/utils";
 import { shuffleColor } from "../lib/shuffle";
 import { createToken } from "../utils";
 
-const token = createPRNG(createToken());
+const token = createToken();
 const mode = randomMode(token);
 const input = randomColor(mode, token);
 const output: ReturnType<typeof shuffleColor>[] = [];

@@ -1,8 +1,8 @@
-import { convertColor, createPRNG, randomColor } from "@repo/color/fn";
+import { convertColor, randomColor } from "@repo/color/fn";
 import { nearest } from "@repo/color/utils";
 import { createToken } from "../utils";
 
-const token = createPRNG(createToken());
+const token = createToken();
 const input = randomColor("oklab", token);
 const output: ReturnType<typeof randomColor>[] = [];
 
