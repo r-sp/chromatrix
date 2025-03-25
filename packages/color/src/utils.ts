@@ -1,7 +1,15 @@
 import type { ColorFormat, ColorMode } from "./types";
 
+const int = (value: string, radix?: number): number => {
+  return Number.parseInt(value, radix);
+};
+
+const float = (value: string): number => {
+  return Number.parseFloat(value);
+};
+
 const clamp = (value: number, min = 0, max = 1): number => {
-  return value > max ? max : value < min ? min : value;
+  return Math.max(min, Math.min(max, value));
 };
 
 const round = (value: number, float = 0): number => {
@@ -41,4 +49,4 @@ const compose = <R>(...fns: UnaryFunction<any, any>[]): UnaryFunction<any, R> =>
   return (x: any) => fns.reduceRight((acc, fn) => fn(acc), x) as R;
 };
 
-export { clamp, round, nearest, compose };
+export { int, float, clamp, round, nearest, compose };
