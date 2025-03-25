@@ -22,7 +22,7 @@ export { lrgbToXyz65, xyz65ToLrgb, xyz50ToXyz65, xyz65ToXyz50 } from "./mode/xyz
 
 export { converter, convertColor, convertHue } from "./lib/convert";
 
-export { formatCss } from "./lib/format";
+export { parseColor, parseCss } from "./lib/parse";
 
 export { createHarmony } from "./lib/harmony";
 
