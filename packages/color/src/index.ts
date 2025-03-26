@@ -24,6 +24,8 @@ export { converter, convertColor, convertHue } from "./lib/convert";
 
 export { parseColor, parseCss } from "./lib/parse";
 
+export { createParams, getParams, getValues, getColor } from "./lib/params";
+
 export { createHarmony } from "./lib/harmony";
 
 export { createShades, createScales } from "./lib/interpolate";
