@@ -113,7 +113,7 @@ const parseCss = <T extends ColorMode>(
           : o
         : o;
 
-  return `${mode}(${c} ${t} ${x})`;
+  return `${mode}(${[c, t, x].join(" ")})`;
 };
 
 export { parseColor, parseCss };
