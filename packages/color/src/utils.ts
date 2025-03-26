@@ -1,5 +1,9 @@
 import type { ColorFormat, ColorMode } from "./types";
 
+const nan = (value: number): boolean => {
+  return Number.isNaN(value);
+};
+
 const int = (value: string, radix?: number): number => {
   return Number.parseInt(value, radix);
 };
@@ -49,4 +53,4 @@ const compose = <R>(...fns: UnaryFunction<any, any>[]): UnaryFunction<any, R> =>
   return (x: any) => fns.reduceRight((acc, fn) => fn(acc), x) as R;
 };
 
-export { int, float, clamp, round, nearest, compose };
+export { nan, int, float, clamp, round, nearest, compose };
