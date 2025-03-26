@@ -6,6 +6,7 @@ export default defineConfig({
   entry: {
     convert: "./src/test/convert.ts",
     harmony: "./src/test/harmony.ts",
+    params: "./src/test/params.ts",
     parse: "./src/test/parse.ts",
     scales: "./src/test/scales.ts",
     shades: "./src/test/shades.ts",
