@@ -1,4 +1,20 @@
-**Chromatrix** is a robust and versatile JavaScript library designed to seamlessly convert between any color format supported by the [CSS Color Module Level 4](https://drafts.csswg.org/css-color/). Built with TypeScript for enhanced type safety and developer experience, it provides a reliable and efficient way to manipulate and transform colors within your web applications.
+# Chromatrix: The Holy Colors
 
-> [!CAUTION]
-> Certain project on this repo may not working properly.
+> [!IMPORTANT]
+> This project is currently under development.
+
+## Usefull commands
+
+- `pnpm build` - Build all packages, including the packages.
+- `pnpm dev` - Run all packages locally and preview.
+- `pnpm lint` - Lint all packages.
+- `pnpm clean` - Clean up all build folders.
+- `pnpm reset` - Clean up all `node_modules`.
+
+## Apps & Packages
+
+This Turborepo includes the following packages and applications:
+- `apps/next`: Landing page with Next.js.
+- `apps/react`: Core React components.
+- `packages/color`: Chromatrix color converter library.
+- `packages/coverage`: Testing color library.
