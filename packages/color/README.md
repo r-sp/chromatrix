@@ -1,36 +1,159 @@
-# CSS Color Converter in TypeScript
-Effortlessly convert colors across a wide range of spaces, including the latest CSS Color Module Level 4 specifications.
+# CSS Color Converter
+Type-safe conversions between all [CSS Color Module Level 4](https://drafts.csswg.org/css-color/) formats.
 
 ## Features
 
 ### Converter
-- [`converter`](./src/lib/convert.ts#L14): Conversion table lookup.
-- [`convertColor`](./src/lib/convert.ts#L77): Convert current color to another color space.
-- [`convertHue`](./src/lib/convert.ts#87): Convert current color to hue based color space.
+- Convert current color to another color space.
+  ```ts
+  convertColor(["rgb", 1, 1, 1], "hsl");
+  ```
+- Convert current color to hue based color space.
+  ```ts
+  convertHue(["rgb", 1, 1, 1]);
+  ```
 
 ### Parser
-- [`parseColor`](./src/lib/parse.ts#L4): Convert css color to array.
-- [`parseCss`](./src/lib/parse.ts#L64): Convert array to css color.
+- Convert css color to current color.
+  ```ts
+  parseColor("#ffffff");
+  ```
+- Convert current color to css color.
+  ```ts
+  parseCss(["rgb", 1, 1, 1]);
+  ```
+
+### Composer
+Combine any color converter as single function.
+```ts
+const lchToOklch = compose(oklabToOklch, lrgbToOklab, xyz65ToLrgb, xyz50ToXyz65, labToXyz50, lchToLab);
+
+const lch = [100, 100, 360] as ColorSpace<"lch">;
+const oklch = lchToOklch(lch);
+```
+
+> [!NOTE]
+> The functions are sorted from right to left, the composer uses [`Array.prototype.reduceRight`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduceRight) to combine provided functions into single function. See: [supported color mode](#color-spaces).
 
 ### Interpolate
-- [`createShades`](./src/lib/interpolate.ts#L4): Generate color shades within range.
-- [`createScales`](./src/lib/interpolate.ts#L28): Generate wide color shades with custom range.
-- [`createHarmony`](./src/lib/harmony.ts#L4): Generate harmony color with custom ratio.
+- Generate color shades within range.
+  ```ts
+  createShades("#ffffff", "#000000", 10);
+  ```
+- Generate wide color shades with custom range.
+  ```ts
+  createScales(["#ffffff", "#808080", "#000000"], 10);
+  ```
+- Generate harmony color with custom ratio.
+  ```ts
+  createHarmony(["rgb", 1, 1, 1], [
+    { name: "Complementary", ratio: [0, 180] },
+    { name: "Analogous", ratio: [-30, 0, 30] },
+    { name: "Triadic", ratio: [0, 120, 240] },
+    { name: "Adjacent", ratio: [0, 150, 210] },
+    { name: "Tetradic", ratio: [0, 90, 180, 270] },
+    { name: "Rectangle", ratio: [0, 60, 180, 240] },
+  ]);
+  ```
 
-### Parameters
-- [`createParams`](./src/lib/params.ts#L5): Generate URL Parameters from color.
-- [`getParams`](./src/lib/params.ts#L23): Extract params to color mode and values.
-- [`getValues`](./src/lib/params.ts#L38): Extract color values from params.
-- [`getColor`](./src/lib/params.ts#L53): Generate color from extracted params.
+### Pseudo Color Random Generator
 
-### Misc
-- [`colorGamut`](./src/lib/gamut.ts#L3): Default color range.
-- [`colorRange`](./src/lib/gamut.ts#L43): Displayable color range.
-- [`colorKind`](./src/lib/gamut.ts#L83): Default color space.
-- [`createPNRG`](./src/lib/random.ts#L4): Create pseudo number random generator.
-- [`createToken`](./src/lib/random.ts#L19): Create a token for PNRG with custom range.
-- [`randomColor`](./src/lib/random.ts#L23): Generate random color with token.
-- [`randomMode`](./src/lib/random.ts#L36): Generate random color mode with token.
+- Create pseudo number random generator.
+  ```ts
+  const date = new Date();
+  const minutes = date.getMinutes();
+  const seconds = date.getSeconds();
+
+  const token = createPNRG(minutes + seconds);
+  ```
+- Create a token for PNRG with custom range.
+  ```ts
+  const pnrg = createPNRG(Date.now());
+
+  const r = createToken(pnrg, 0, 1);
+  const g = createToken(pnrg, 0, 1);
+  const b = createToken(pnrg, 0, 1);
+
+  const color = ["rgb", r, g, b];
+  ```
+- Generate random color with token.
+  ```ts
+  const token = createPNRG(Date.now());
+
+  const color = randomColor("rgb", token);
+  ```
+- Generate random color mode with token.
+  ```ts
+  const token = createPNRG(Date.now());
+  
+  const mode = randomMode(token);
+
+  const color = randomColor(mode, token);
+  ```
+
+### Color as URL Parameters
+- Generate params from color.
+  ```ts
+  const colorParams = createParams(["rgb", 1, 1, 1]);
+  ```
+- Extract params to color mode and values.
+  ```ts
+  const colorParams = new URLSearchParams("?rgb=1,1,1");
+
+  const [colorMode, searchParams] = getParams(colorParams);
+  ```
+- Generate color from extracted params.
+  ```ts
+  const colorParams = createParams(["rgb", 1, 1, 1]);
+
+  const params = new URLSearchParams(colorParams);
+
+  const [colorMode, searchParams] = getParams(params);
+
+  const values = getValues(searchParams);
+
+  const color = getColor(colorMode, values);
+  ```
+
+### Color Matrix
+
+Two distinct pathways for converting between LAB and OKLAB color spaces, both relying on intermediate transformations through RGB and XYZ spaces, but differing in the specific XYZ standard used (XYZ50 vs. XYZ65).
+
+- via [XYZ50](#xyz50).
+  ```ts
+  const labToOklab = compose(lrgbToOklab, xyz50ToLrgb, labToXyz50);
+  const oklabToLab = compose(xyz50ToLab, lrgbToXzy50, oklabToLrgb);
+  ```
+  - This approach uses the D50 standard illuminant throughout the process.
+  - D50 is often preferred in color management workflows, particularly in printing and graphic arts, where accurate color reproduction is crucial.
+- via [XYZ65](#xyz65).
+  ```ts
+  const labToOklab = compose(lrgbToOklab, xyz65ToLrgb, xyz50ToXyz65, labToXyz50);
+  const oklabToLab = compose(xyz50ToLab, xyz65ToXyz50, lrgbToXyz65, oklabToLrgb);
+  ```
+  - This approach introduces a conversion between XYZ50 and XYZ65.
+  - D65 is commonly used in display technologies and web applications.
+  - By including the conversion between XYZ50 and XYZ65, this path takes into account the different white points.
+
+Both conversion paths are valid, and the choice depends on the specific requirements of your application. The XYZ65 path, by taking into account the more commonly used display standard, may be the preferred choice in many situations.
+
+### Tuple-Centric Design
+The pervasive use of object literals, while offering dynamic key-value mapping, often obscures the inherent structural intent of data. In contexts demanding deterministic cardinality and type homogeneity, tuples emerge as a powerful abstraction.
+
+- **Formalized Structural Invariants**:
+  Tuples impose a strict, compile-time enforced schema. This eliminates the runtime ambiguity associated with optional or dynamically assigned object properties, promoting predictable data topologies.
+- **Optimized Memory Layout and Access Patterns**:
+  The contiguous memory allocation inherent in tuples facilitates optimized indexing operations. This is especially relevant in numerical computation or real-time data processing, where minimizing access latency is critical.
+- **Type-Level Refinement and Invariant Preservation**:
+  TypeScript's type system leverages tuples to achieve fine-grained type specialization. This enables the encoding of complex data invariants directly within the type signature, enhancing code robustness and reducing the likelihood of runtime type errors.
+- **Destructuring as a Syntactic Catalyst**:
+  Tuple destructuring provides an elegant mechanism for extracting and binding structured data to symbolic names. This syntactic sugar enhances code readability and conciseness, particularly when dealing with multi-valued return types or complex data transformations.
+
+Drawing inspiration from the robust color manipulation capabilities of [Culori](https://github.com/Evercoder/culori), we have implemented a suite of color transformation functions predicated on tuple-based color representations.
+
+This design choice allows for the creation of optimized, structurally rigid color pipelines, leveraging custom functions to achieve unique color manipulations that diverge from standard object implementations. This tuple first approach allows for very performant color manipulation.
+
+See: [Coverage](../coverage/README.md).
 
 ## Color Spaces
 
