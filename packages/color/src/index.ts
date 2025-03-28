@@ -31,3 +31,5 @@ export { createHarmony } from "./lib/harmony";
 export { createShades, createScales } from "./lib/interpolate";
 
 export { createPRNG, createToken, randomColor, randomMode } from "./lib/random";
+
+export { clamp, round, nearest } from "./utils";

@@ -4,8 +4,8 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch",
+    "build": "tsup --onSuccess 'node dist/index.js'",
+    "dev": "tsup --watch --onSuccess 'node dist/index.js'",
     "clean": "rm -rf dist",
     "reset": "rm -rf node_modules"
   },

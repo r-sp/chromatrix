@@ -1,17 +1,5 @@
 import type { ColorFormat, ColorMode } from "./types";
 
-const nan = (value: number): boolean => {
-  return Number.isNaN(value);
-};
-
-const int = (value: string, radix?: number): number => {
-  return Number.parseInt(value, radix);
-};
-
-const float = (value: string): number => {
-  return Number.parseFloat(value);
-};
-
 const clamp = (value: number, min = 0, max = 1): number => {
   return Math.max(min, Math.min(max, value));
 };
@@ -25,7 +13,10 @@ const round = (value: number, float = 0): number => {
 };
 
 const nearest = <T extends ColorMode>(input: ColorFormat<T>, float = 0): ColorFormat<T> => {
-  let [mode, c, t, x] = input;
+  const mode = input[0];
+  let c = input[1];
+  let t = input[2];
+  let x = input[3];
 
   const rgbGamut = 255;
   const hsvGamut = 100;
@@ -47,10 +38,4 @@ const nearest = <T extends ColorMode>(input: ColorFormat<T>, float = 0): ColorFo
   return [mode, c, t, x];
 };
 
-type UnaryFunction<T, R> = (arg: T) => R;
-
-const compose = <R>(...fns: UnaryFunction<any, any>[]): UnaryFunction<any, R> => {
-  return (x: any) => fns.reduceRight((acc, fn) => fn(acc), x) as R;
-};
-
-export { nan, int, float, clamp, round, nearest, compose };
+export { clamp, round, nearest };

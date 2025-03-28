@@ -1,5 +1,4 @@
 import type { ColorFormat, ColorMode } from "../types";
-import { float, nan } from "../utils";
 import { colorKind } from "./gamut";
 
 const createParams = <T extends ColorMode>(input: ColorFormat<T>): string => {
@@ -40,8 +39,8 @@ const getValues = (param: string): number[] => {
   const parts = param.split(",");
 
   for (const part of parts) {
-    let parse = float(part);
-    if (nan(parse)) {
+    let parse = Number.parseFloat(part);
+    if (Number.isNaN(parse)) {
       parse = 0;
     }
     values.push(parse);

@@ -1,5 +1,4 @@
 import type { ColorFormat, ColorMode } from "../types";
-import { float, int } from "../utils";
 
 const parseColor = (input: string): ColorFormat<ColorMode> => {
   let css = input.trim().toLowerCase();
@@ -9,16 +8,16 @@ const parseColor = (input: string): ColorFormat<ColorMode> => {
   }
 
   if (/^[0-9a-f]{3}$/.test(css)) {
-    const r = int(css.charAt(0) + css.charAt(0), 16);
-    const g = int(css.charAt(1) + css.charAt(1), 16);
-    const b = int(css.charAt(2) + css.charAt(2), 16);
+    const r = Number.parseInt(css.charAt(0) + css.charAt(0), 16);
+    const g = Number.parseInt(css.charAt(1) + css.charAt(1), 16);
+    const b = Number.parseInt(css.charAt(2) + css.charAt(2), 16);
     return ["rgb", r, g, b];
   }
 
   if (/^[0-9a-f]{6}$/.test(css)) {
-    const r = int(css.substring(0, 2), 16);
-    const g = int(css.substring(2, 4), 16);
-    const b = int(css.substring(4, 6), 16);
+    const r = Number.parseInt(css.substring(0, 2), 16);
+    const g = Number.parseInt(css.substring(2, 4), 16);
+    const b = Number.parseInt(css.substring(4, 6), 16);
     return ["rgb", r, g, b];
   }
 
@@ -32,24 +31,24 @@ const parseColor = (input: string): ColorFormat<ColorMode> => {
 
     switch (color) {
       case "rgb": {
-        return [color, ...decimal.map((value) => float(value) / 255)] as ColorFormat<"rgb">;
+        return [color, ...decimal.map((value) => Number.parseFloat(value) / 255)] as ColorFormat<"rgb">;
       }
       case "hsl":
       case "hwb": {
         return [
           color,
-          ...decimal.map((value, index) => (index === 0 ? float(value) : float(value) / 100)),
+          ...decimal.map((value, index) => (index === 0 ? Number.parseFloat(value) : Number.parseFloat(value) / 100)),
         ] as ColorFormat<"hsl" | "hwb">;
       }
       case "lab":
       case "lch": {
-        return [color, ...decimal.map((value) => float(value))] as ColorFormat<"lab" | "lch">;
+        return [color, ...decimal.map((value) => Number.parseFloat(value))] as ColorFormat<"lab" | "lch">;
       }
       case "oklab":
       case "oklch": {
         return [
           color,
-          ...decimal.map((value) => (value.endsWith("%") ? float(value) / 100 : float(value))),
+          ...decimal.map((value) => (value.endsWith("%") ? Number.parseFloat(value) / 100 : Number.parseFloat(value))),
         ] as ColorFormat<"oklab" | "oklch">;
       }
       default: {
@@ -61,11 +60,7 @@ const parseColor = (input: string): ColorFormat<ColorMode> => {
   return invalidColor;
 };
 
-const parseCss = <T extends ColorMode>(
-  input: ColorFormat<T>,
-  percent?: boolean,
-  degree?: boolean,
-): string => {
+const parseCss = <T extends ColorMode>(input: ColorFormat<T>, percent?: boolean, degree?: boolean): string => {
   const mode = input[0];
   const rgb = mode === "rgb";
   const hsl = mode === "hsl";

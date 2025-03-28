@@ -6,7 +6,6 @@
   "main": "dist/index.js",
   "exports": {
     "./fn": "./src/index.ts",
-    "./utils": "./src/utils.ts",
     "./types": "./src/types.ts"
   },
   "scripts": {

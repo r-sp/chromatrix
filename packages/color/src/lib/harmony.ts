@@ -4,10 +4,7 @@ import { convertColor, convertHue } from "./convert";
 const createHarmony = <T extends ColorMode>(
   input: ColorFormat<T>,
   variants: { name: string; ratio: number[] }[],
-): {
-  name: string;
-  ratio: ColorFormat<T>[];
-}[] => {
+): { name: string; ratio: ColorFormat<T>[] }[] => {
   const hue = convertHue(input);
   const base = hue[0];
   const mode = input[0];

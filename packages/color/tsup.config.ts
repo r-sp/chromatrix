@@ -5,7 +5,6 @@ export default defineConfig({
   splitting: true,
   entry: {
     index: "./src/index.ts",
-    utils: "./src/utils.ts",
   },
   dts: true,
   clean: true,
