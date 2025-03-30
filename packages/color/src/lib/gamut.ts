@@ -1,4 +1,4 @@
-import type { ColorMode } from "../types";
+import type { ColorFormat, ColorMode } from "../types";
 
 const colorGamut: {
   [T in ColorMode]: [[number, number], [number, number], [number, number]];
@@ -82,4 +82,31 @@ const colorRange: {
 
 const colorKind: ColorMode[] = ["rgb", "hsl", "hwb", "lab", "lch", "oklab", "oklch"];
 
-export { colorGamut, colorRange, colorKind };
+const colorLabel: { [T in ColorMode]: [string, string, string] } = {
+  rgb: ["red", "green", "blue"],
+  hsl: ["hue", "saturation", "lightness"],
+  hwb: ["hue", "whiteness", "blackness"],
+  lab: ["lightness", "green-red", "blue-yellow"],
+  lch: ["lightness", "chroma", "hue"],
+  oklab: ["lightness", "green-red", "blue-yellow"],
+  oklch: ["lightness", "chroma", "hue"],
+};
+
+const checkGamut = <T extends ColorMode>(input: ColorFormat<T>): string[] => {
+  const [mode, ...values] = input;
+  const ranges = colorGamut[mode];
+  const labels = colorLabel[mode];
+  const warnings: string[] = [];
+
+  for (let i = 0; i < 3; i++) {
+    const [min, max] = ranges[i] as [number, number];
+    const label = labels[i] as string;
+    const value = values[i] as number;
+
+    value < min ? warnings.push(`${label} is under the range`) : value > max && warnings.push(`${label} is above the range`);
+  }
+
+  return warnings;
+};
+
+export { colorGamut, colorRange, colorKind, checkGamut };
