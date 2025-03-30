@@ -1,24 +1,15 @@
-import {
-  convertColor,
-  convertHue,
-  createHarmony,
-  createPRNG,
-  createParams,
-  createScales,
-  createShades,
-  getColor,
-  getParams,
-  getValues,
-  nearest,
-  parseColor,
-  parseCss,
-  randomColor,
-  randomMode,
-  rgbToHex,
-} from "@repo/color/fn";
+import { convertColor, convertHue } from "@repo/color/convert";
+import { rgbToHex } from "@repo/color/fn";
+import { checkGamut, colorKind } from "@repo/color/gamut";
+import { createHarmony } from "@repo/color/harmony";
+import { createScales, createShades } from "@repo/color/interpolate";
+import { createParams, getColor, getParams, getValues } from "@repo/color/params";
+import { parseColor, parseCss } from "@repo/color/parse";
+import { createPRNG, createToken, randomColor, randomMode } from "@repo/color/random";
 import type { ColorFormat, ColorMode } from "@repo/color/types";
+import { nearest } from "@repo/color/utils";
 
-const createToken = (): { token: () => number } => {
+const getToken = (): { token: () => number } => {
   const date = new Date();
   const seconds = date.getSeconds();
   const minutes = date.getMinutes();
@@ -26,7 +17,7 @@ const createToken = (): { token: () => number } => {
   return createPRNG(seconds + minutes);
 };
 
-const createTokens = (): [{ token: () => number }, { token: () => number }] => {
+const getTokens = (): [{ token: () => number }, { token: () => number }] => {
   const date = new Date();
   const local = date.getSeconds() + date.getMinutes();
   const time = date.getTime();
@@ -34,108 +25,112 @@ const createTokens = (): [{ token: () => number }, { token: () => number }] => {
   return [createPRNG(local), createPRNG(time)];
 };
 
+const shuffleConverter: {
+  [T in ColorMode]: (input: ColorFormat<T>) => { [R in ColorMode]: ColorFormat<R> };
+} = {
+  rgb: (input) => ({
+    rgb: input,
+    hsl: convertColor(input, "hsl"),
+    hwb: convertColor(input, "hwb"),
+    lab: convertColor(input, "lab"),
+    lch: convertColor(input, "lch"),
+    oklab: convertColor(input, "oklab"),
+    oklch: convertColor(input, "oklch"),
+  }),
+  hsl: (input) => ({
+    rgb: convertColor(input, "rgb"),
+    hsl: input,
+    hwb: convertColor(input, "hwb"),
+    lab: convertColor(input, "lab"),
+    lch: convertColor(input, "lch"),
+    oklab: convertColor(input, "oklab"),
+    oklch: convertColor(input, "oklch"),
+  }),
+  hwb: (input) => ({
+    rgb: convertColor(input, "rgb"),
+    hsl: convertColor(input, "hsl"),
+    hwb: input,
+    lab: convertColor(input, "lab"),
+    lch: convertColor(input, "lch"),
+    oklab: convertColor(input, "oklab"),
+    oklch: convertColor(input, "oklch"),
+  }),
+  lab: (input) => ({
+    rgb: convertColor(input, "rgb"),
+    hsl: convertColor(input, "hsl"),
+    hwb: convertColor(input, "hwb"),
+    lab: input,
+    lch: convertColor(input, "lch"),
+    oklab: convertColor(input, "oklab"),
+    oklch: convertColor(input, "oklch"),
+  }),
+  lch: (input) => ({
+    rgb: convertColor(input, "rgb"),
+    hsl: convertColor(input, "hsl"),
+    hwb: convertColor(input, "hwb"),
+    lab: convertColor(input, "lab"),
+    lch: input,
+    oklab: convertColor(input, "oklab"),
+    oklch: convertColor(input, "oklch"),
+  }),
+  oklab: (input) => ({
+    rgb: convertColor(input, "rgb"),
+    hsl: convertColor(input, "hsl"),
+    hwb: convertColor(input, "hwb"),
+    lab: convertColor(input, "lab"),
+    lch: convertColor(input, "lch"),
+    oklab: input,
+    oklch: convertColor(input, "oklch"),
+  }),
+  oklch: (input) => ({
+    rgb: convertColor(input, "rgb"),
+    hsl: convertColor(input, "hsl"),
+    hwb: convertColor(input, "hwb"),
+    lab: convertColor(input, "lab"),
+    lch: convertColor(input, "lch"),
+    oklab: convertColor(input, "oklab"),
+    oklch: input,
+  }),
+};
+
 const shuffleColor = <T extends ColorMode>(input: ColorFormat<T>): { [I in ColorMode]: ColorFormat<I> } => {
-  switch (input[0]) {
-    case "rgb": {
-      const rgb = input as ColorFormat<"rgb">;
-      return {
-        rgb: rgb,
-        hsl: convertColor(rgb, "hsl"),
-        hwb: convertColor(rgb, "hwb"),
-        lab: convertColor(rgb, "lab"),
-        lch: convertColor(rgb, "lch"),
-        oklab: convertColor(rgb, "oklab"),
-        oklch: convertColor(rgb, "oklch"),
-      };
-    }
-    case "hsl": {
-      const hsl = input as ColorFormat<"hsl">;
-      return {
-        rgb: convertColor(hsl, "rgb"),
-        hsl: hsl,
-        hwb: convertColor(hsl, "hwb"),
-        lab: convertColor(hsl, "lab"),
-        lch: convertColor(hsl, "lch"),
-        oklab: convertColor(hsl, "oklab"),
-        oklch: convertColor(hsl, "oklch"),
-      };
-    }
-    case "hwb": {
-      const hwb = input as ColorFormat<"hwb">;
-      return {
-        rgb: convertColor(hwb, "rgb"),
-        hsl: convertColor(hwb, "hsl"),
-        hwb: hwb,
-        lab: convertColor(hwb, "lab"),
-        lch: convertColor(hwb, "lch"),
-        oklab: convertColor(hwb, "oklab"),
-        oklch: convertColor(hwb, "oklch"),
-      };
-    }
-    case "lab": {
-      const lab = input as ColorFormat<"lab">;
-      return {
-        rgb: convertColor(lab, "rgb"),
-        hsl: convertColor(lab, "hsl"),
-        hwb: convertColor(lab, "hwb"),
-        lab: lab,
-        lch: convertColor(lab, "lch"),
-        oklab: convertColor(lab, "oklab"),
-        oklch: convertColor(lab, "oklch"),
-      };
-    }
-    case "lch": {
-      const lch = input as ColorFormat<"lch">;
-      return {
-        rgb: convertColor(lch, "rgb"),
-        hsl: convertColor(lch, "hsl"),
-        hwb: convertColor(lch, "hwb"),
-        lab: convertColor(lch, "lab"),
-        lch: lch,
-        oklab: convertColor(lch, "oklab"),
-        oklch: convertColor(lch, "oklch"),
-      };
-    }
-    case "oklab": {
-      const oklab = input as ColorFormat<"oklab">;
-      return {
-        rgb: convertColor(oklab, "rgb"),
-        hsl: convertColor(oklab, "hsl"),
-        hwb: convertColor(oklab, "hwb"),
-        lab: convertColor(oklab, "lab"),
-        lch: convertColor(oklab, "lch"),
-        oklab: oklab,
-        oklch: convertColor(oklab, "oklch"),
-      };
-    }
-    case "oklch": {
-      const oklch = input as ColorFormat<"oklch">;
-      return {
-        rgb: convertColor(oklch, "rgb"),
-        hsl: convertColor(oklch, "hsl"),
-        hwb: convertColor(oklch, "hwb"),
-        lab: convertColor(oklch, "lab"),
-        lch: convertColor(oklch, "lch"),
-        oklab: convertColor(oklch, "oklab"),
-        oklch: oklch,
-      };
-    }
-  }
+  return shuffleConverter[input[0]](input);
 };
 
 const testing = {
   iteration: 1000,
   random: {
-    color: <T extends ColorMode>(kind: T) => randomColor(kind, createToken()),
-    mode: () => randomMode(createToken()),
+    color: <T extends ColorMode>(kind: T) => {
+      const token = getToken();
+      return randomColor(kind, token);
+    },
+    conversion: (): [ColorFormat<"rgb">, Exclude<ColorMode, "rgb">] => {
+      const token = getToken();
+      const mode = randomMode(token) as "rgb";
+      const color = randomColor(mode, token);
+
+      const index = colorKind.filter((current) => current !== mode);
+      const shuffle = randomMode(token, index) as Exclude<ColorMode, "rgb">;
+
+      return [color, shuffle];
+    },
+    mode: () => {
+      const token = getToken();
+      return randomMode(token);
+    },
     ext: () => {
-      const token = createToken();
+      const token = getToken();
       const mode = randomMode(token);
       return randomColor(mode, token);
     },
-    hex: () => rgbToHex(nearest(randomColor("rgb", createToken()))),
+    hex: () => {
+      const token = getToken();
+      const color = randomColor("rgb", token);
+      const gamut = nearest(color);
+      return rgbToHex(gamut);
+    },
     duotone: (): [string, string] => {
-      const token = createTokens();
+      const token = getTokens();
       const startColor = randomColor("rgb", token[0]);
       const endColor = randomColor("rgb", token[1]);
 
@@ -144,12 +139,23 @@ const testing = {
 
       return [startHex, endHex];
     },
+    range: (min: number, max: number): ColorFormat<ColorMode> => {
+      const token = getToken();
+      const mode = randomMode(token);
+
+      const c = createToken(token, min, max);
+      const t = createToken(token, min, max);
+      const x = createToken(token, min, max);
+
+      return [mode, c, t, x];
+    },
   },
   round: nearest,
   converter: {
     color: convertColor,
     hue: convertHue,
     hex: rgbToHex,
+    gamut: checkGamut,
   },
   parser: {
     color: parseColor,
