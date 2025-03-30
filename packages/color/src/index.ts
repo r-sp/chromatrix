@@ -19,17 +19,3 @@ export { lrgbToOklab, oklabToLrgb } from "./mode/oklab";
 export { oklabToOklch, oklchToOklab } from "./mode/oklch";
 
 export { lrgbToXyz65, xyz65ToLrgb, xyz50ToXyz65, xyz65ToXyz50 } from "./mode/xyz65";
-
-export { converter, convertColor, convertHue } from "./lib/convert";
-
-export { parseColor, parseCss } from "./lib/parse";
-
-export { createParams, getParams, getValues, getColor } from "./lib/params";
-
-export { createHarmony } from "./lib/harmony";
-
-export { createShades, createScales } from "./lib/interpolate";
-
-export { createPRNG, createToken, randomColor, randomMode } from "./lib/random";
-
-export { clamp, round, nearest } from "./utils";
