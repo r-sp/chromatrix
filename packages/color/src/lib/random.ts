@@ -20,10 +20,7 @@ const createToken = (prng: { token: () => number }, min: number, max: number): n
   return prng.token() * (max - min) + min;
 };
 
-const randomColor = <T extends ColorMode>(
-  mode: T,
-  prng: { token: () => number },
-): ColorFormat<T> => {
+const randomColor = <T extends ColorMode>(mode: T, prng: { token: () => number }): ColorFormat<T> => {
   const [cr, tr, xr] = colorRange[mode];
 
   const c = createToken(prng, cr[0], cr[1]);
@@ -33,8 +30,10 @@ const randomColor = <T extends ColorMode>(
   return [mode, c, t, x] as ColorFormat<T>;
 };
 
-const randomMode = (prng: { token: () => number }): ColorMode => {
-  const index = Array.from({ length: colorKind.length }, (_, i) => i);
+const randomMode = (prng: { token: () => number }, kind?: ColorMode[]): ColorMode => {
+  const colorSpace = kind ? kind : colorKind;
+
+  const index = Array.from({ length: colorSpace.length }, (_, i) => i);
   const shuffle: number[] = [];
 
   let i = index.length;
@@ -46,7 +45,7 @@ const randomMode = (prng: { token: () => number }): ColorMode => {
 
   let mode: ColorMode = "rgb";
   for (const color of shuffle) {
-    mode = colorKind[color] || mode;
+    mode = colorSpace[color] || mode;
   }
 
   return mode;

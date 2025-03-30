@@ -6,6 +6,7 @@ export default defineConfig({
   entry: {
     index: "./src/index.ts",
     convert: "./src/convert.ts",
+    gamut: "./src/gamut.ts",
     harmony: "./src/harmony.ts",
     params: "./src/params.ts",
     parse: "./src/parse.ts",
