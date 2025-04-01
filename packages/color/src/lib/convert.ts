@@ -135,8 +135,7 @@ const convertHue = <T extends ColorMode>(input: ColorFormat<T>): ColorFormat<"hs
   let output: ColorFormat<"hsl" | "hwb" | "lch" | "oklch">;
 
   if (mode === "rgb") {
-    const color = compose<"rgb", "hsl">([hsvToHsl, rgbToHsv]);
-    output = ["hsl", ...color(value as ColorSpace<"rgb">)] as ColorFormat<"hsl">;
+    output = ["hsl", ...rgbToHsl(value as ColorSpace<"rgb">)] as ColorFormat<"hsl">;
   } else if (mode === "lab") {
     output = ["lch", ...labToLch(value as ColorSpace<"lab">)] as ColorFormat<"lch">;
   } else if (mode === "oklab") {
