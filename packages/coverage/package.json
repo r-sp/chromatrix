@@ -11,7 +11,7 @@
   },
   "devDependencies": {
     "@repo/color": "workspace:*",
-    "@types/node": "^22.13.11",
+    "@types/node": "^22.13.16",
     "tsup": "^8.4.0",
     "typescript": "^5.8.2"
   }
