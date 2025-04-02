@@ -17,4 +17,4 @@ This Turborepo includes the following packages and applications:
 - `apps/next`: Landing page with Next.js.
 - `apps/react`: Core React components.
 - [`packages/color`](./packages/color/README.md): Chromatrix color converter library.
-- [`packages/coverage`](./packages/color/README.md): Testing color library.
+- [`packages/coverage`](./packages/coverage/README.md): Testing color library.
