@@ -1,5 +1,5 @@
-import { hexToRgb } from "../mode/rgb";
 import type { ColorFormat } from "../types";
+import { hexToRgb } from "../mode/rgb";
 
 const createShades = (startColor: string, endColor: string, steps: number): ColorFormat<"rgb">[] => {
   const start = hexToRgb(startColor);

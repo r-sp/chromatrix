@@ -1,3 +1,4 @@
+import type { ColorFormat, ColorMode } from "@repo/color/types";
 import { convertColor, convertHue } from "@repo/color/convert";
 import { rgbToHex } from "@repo/color/fn";
 import { checkGamut, colorKind } from "@repo/color/gamut";
@@ -6,7 +7,6 @@ import { createScales, createShades } from "@repo/color/interpolate";
 import { createParams, getColor, getParams, getValues } from "@repo/color/params";
 import { parseColor, parseCss } from "@repo/color/parse";
 import { createPRNG, createToken, randomColor, randomMode } from "@repo/color/random";
-import type { ColorFormat, ColorMode } from "@repo/color/types";
 import { nearest } from "@repo/color/utils";
 
 const getToken = (): { token: () => number } => {

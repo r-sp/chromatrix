@@ -1,3 +1,4 @@
+import type { ColorFn, ColorFormat, ColorMode, ColorSpace } from "../types";
 import { hslToHsv, hsvToHsl } from "../mode/hsl";
 import { hsvToRgb, rgbToHsv } from "../mode/hsv";
 import { hsvToHwb, hwbToHsv } from "../mode/hwb";
@@ -8,7 +9,6 @@ import { lrgbToOklab, oklabToLrgb } from "../mode/oklab";
 import { oklabToOklch, oklchToOklab } from "../mode/oklch";
 import { lrgbToXyz50, xyz50ToLrgb } from "../mode/xyz50";
 import { lrgbToXyz65, xyz50ToXyz65, xyz65ToLrgb, xyz65ToXyz50 } from "../mode/xyz65";
-import type { ColorFn, ColorFormat, ColorMode, ColorSpace } from "../types";
 
 const compose = <T extends ColorMode, R extends ColorMode>(
   converter: Array<(input: ColorSpace<any>) => ColorSpace<any>>,

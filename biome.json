@@ -28,7 +28,7 @@
     }
   },
   "organizeImports": {
-    "enabled": true
+    "enabled": false
   },
   "overrides": [
     {
