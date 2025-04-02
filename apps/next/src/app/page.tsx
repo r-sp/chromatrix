@@ -11,10 +11,10 @@ export default function Home(): JSX.Element {
         <p className="text-gray-200">The Holy Colors</p>
       </div>
       <Link
-        href="https://github.com/r-sp/chromatrix"
+        href="/github"
         className="text-matrix-200 font-medium"
         target="_blank"
-        rel="nofolow noopener"
+        rel="noopener"
       >
         Preview
       </Link>

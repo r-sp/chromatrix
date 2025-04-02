@@ -19,10 +19,10 @@
   ],
   "git": {
     "deploymentEnabled": {
+      "prod": true,
+      "dev": true,
       "main": false,
-      "packages": false,
-      "next": true,
-      "staging": true
+      "packages": false
     }
   }
 }
