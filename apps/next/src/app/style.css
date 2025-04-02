@@ -12,4 +12,10 @@
   --color-gray-800: oklch(0.288 0 0);
   --color-gray-900: oklch(0.192 0 0);
   --color-gray-950: oklch(0 0 0);
+  --color-matrix-200: #5999f3;
+  --color-matrix-300: #f35999;
+  --color-matrix-400: #99f359;
+  --color-matrix-600: #f3b359;
+  --color-matrix-700: #59f3b3;
+  --color-matrix-800: #b359f3;
 }
