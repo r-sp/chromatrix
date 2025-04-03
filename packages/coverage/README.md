@@ -38,4 +38,7 @@ node dist/harmony.js
 
 # test createParams(); getParams(); getValues(); and getColor();
 node dist/params.js
+
+# test checkGamut();
+node dist/gamut.js
 ```
