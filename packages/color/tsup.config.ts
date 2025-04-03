@@ -8,7 +8,6 @@ export default defineConfig({
     utils: "./src/utils.ts",
     convert: "./src/lib/convert.ts",
     gamut: "./src/lib/gamut.ts",
-    harmony: "./src/lib/harmony.ts",
     interpolate: "./src/lib/interpolate.ts",
     params: "./src/lib/params.ts",
     parse: "./src/lib/parse.ts",
