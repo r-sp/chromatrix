@@ -30,18 +30,6 @@
   "organizeImports": {
     "enabled": false
   },
-  "overrides": [
-    {
-      "include": ["./packages/**/*.ts"],
-      "linter": {
-        "rules": {
-          "suspicious": {
-            "noExplicitAny": "off"
-          }
-        }
-      }
-    }
-  ],
   "vcs": {
     "enabled": true,
     "clientKind": "git",

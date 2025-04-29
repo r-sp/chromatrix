@@ -1,6 +1,6 @@
 import type { JSX } from "react";
 import Link from "next/link";
-import Logo from "../components/logo";
+import Logo from "./logo";
 
 export default function Home(): JSX.Element {
   return (
